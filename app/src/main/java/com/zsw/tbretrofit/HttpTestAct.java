@@ -14,6 +14,7 @@ import com.tb.tbretrofit.httputils.factory.TBCallBack;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -118,7 +119,7 @@ public class HttpTestAct extends AppCompatActivity {
     void GETByNormal() {
         TBRequest.create()
                 .put("user", "HarkBen")
-                .get(API.GITHUB_RESTFUL, new TBCallBack() {
+                .get(API.GITHUB_NORMAL, new TBCallBack() {
                     @Override
                     public void onSuccess(int code, String body) {
                         showResult(code + "--" + body);
@@ -131,7 +132,6 @@ public class HttpTestAct extends AppCompatActivity {
                     }
 
                 });
-
     }
 
     void POSTFormData(){
@@ -195,6 +195,7 @@ public class HttpTestAct extends AppCompatActivity {
             +"tencent/Qtl/find/";
 
     void uploadFiles(){
+
         File file1 = new File(parentPath+"291739323217867.png");
         File file2 = new File(parentPath+"291733413425432.png");
         File file3 = new File(parentPath+"222004413632569.png");
