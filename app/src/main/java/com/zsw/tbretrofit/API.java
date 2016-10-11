@@ -23,4 +23,6 @@ public class API {
 
     public static final String GITHUB_RESTFUL = "https://api.github.com/users";
 
+    public static final String GITHUB_NORMAL = "https://api.github.com/users";
+
 }
