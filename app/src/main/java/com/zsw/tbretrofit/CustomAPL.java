@@ -26,7 +26,7 @@ public class CustomAPL extends Application {
                 .setTimeout_read(10)
                 .setTimeout_write(10)
                 .build();
-        TBRequestFactory.build(TBRetrofitFactory.getInstance("http://www.xx.com/"));
+        TBRequestFactory.build(TBRetrofitFactory.getInstance(API.BASEURL));
 
     }
 }

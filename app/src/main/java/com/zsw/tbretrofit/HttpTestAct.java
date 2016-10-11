@@ -19,6 +19,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.zsw.tbretrofit.API.GITHUB_RESTFUL;
+
 /**
  * Create on 2016/9/30.
  * github  https://github.com/HarkBen
@@ -47,7 +49,7 @@ public class HttpTestAct extends AppCompatActivity {
     @Bind(R.id.att_post_formData)
     Button attPostFormData;
 
-    private static final String GITHUB_RESTFUL = "https://api.github.com/users";
+
 
 
     @Override
@@ -77,13 +79,15 @@ public class HttpTestAct extends AppCompatActivity {
 
                 break;
             case R.id.att_post_txtAndFile:
-
+                showResult("文件上传底层都支持附带其他表单参数，请参照 单文件 和多文件" +
+                        "，但是请勿与postFormData 混淆，因为文件表单 和 文本表单的 ContentType不一样" +
+                        "后台接收方式也不同");
                 break;
             case R.id.att_post_fileList:
                 uploadFiles();
                 break;
             case R.id.att_post_formData:
-
+                POSTFormData();
                 break;
         }
     }
@@ -98,7 +102,7 @@ public class HttpTestAct extends AppCompatActivity {
      */
     void GETByRestful() {
         TBRequest.create()
-                .get(GITHUB_RESTFUL, new String[]{"Harkben"}, new TBCallBack() {
+                .get(API.GITHUB_RESTFUL, new String[]{"Harkben"}, new TBCallBack() {
                     @Override
                     public void onSuccess(int code, String body) {
                         showResult(code + "--" + body);
@@ -114,7 +118,7 @@ public class HttpTestAct extends AppCompatActivity {
     void GETByNormal() {
         TBRequest.create()
                 .put("user", "HarkBen")
-                .get(GITHUB_RESTFUL, new TBCallBack() {
+                .get(API.GITHUB_RESTFUL, new TBCallBack() {
                     @Override
                     public void onSuccess(int code, String body) {
                         showResult(code + "--" + body);
@@ -130,14 +134,31 @@ public class HttpTestAct extends AppCompatActivity {
 
     }
 
+    void POSTFormData(){
+        String url = API.FORMDATA;
+        TBRequest.create()
+                .put("username", "cat")
+                .put("password", "222222")
+                .put("weight", "4Kg")
+                .postFormData(url, new TBCallBack() {
+                    @Override
+                    public void onSuccess(int code, String body) {
+                        showResult(code + "--" + body);
+                    }
+
+                    @Override
+                    public void onFailed(String errorMsg) {
+                        showResult("onFailed=="+errorMsg);
+                    }
+                });
+    }
+
     void POSTByJson() {
         String url = API.LOGINTOBR;
         TBRequest.create()
-                .put("username", "zhusw")
-                .put("password", "333333")
-                .put("client_flag", "android")
-                .put("model", "SCL-AL00")
-                .put("locale", "zh")
+                .put("username", "tigger")
+                .put("password", "111111")
+                .put("weight", "130Kg")
                 .postJson(url, new TBCallBack() {
                     @Override
                     public void onSuccess(int code, String body) {

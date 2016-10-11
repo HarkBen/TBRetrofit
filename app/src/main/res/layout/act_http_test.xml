@@ -53,7 +53,7 @@
         <Button
             android:id="@+id/att_post_formData"
             android:layout_width="wrap_content"
-            android:text="formData"
+            android:text="纯表单数据"
             android:layout_height="wrap_content" />
         <Button
             android:id="@+id/att_post_file"
@@ -68,7 +68,7 @@
     <Button
         android:id="@+id/att_post_txtAndFile"
         android:layout_width="wrap_content"
-        android:text="文本Andfile"
+        android:text="文本  ++   文件"
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/att_post_fileList"
