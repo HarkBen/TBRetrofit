@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">TBRetrofit</string>
+    <string name="httpRequestinit">初始Client 和 Factory:
+        \nTBOkHttpClientFactory.Builder.create() \n
+                .setDebug(true) \n
+                .syncCookie(this) \n
+                .setTimeout_connection(10) \n
+                .setTimeout_read(10) \n
+                .setTimeout_write(10) \n
+                .build(); \n
+        TBRequestFactory \n
+        .build(TBRetrofitFactory.getInstance("http://www.xx.com/"));</string>
+</resources>

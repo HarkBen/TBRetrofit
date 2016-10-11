@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@android:color/background_dark"
+    android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/att_log"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:text="@string/httpRequestinit"
+        android:gravity="start"
+        android:background="@android:color/background_dark"
+        android:textColor="@android:color/white"
+        android:layout_height="0dip" />
+    <View
+        android:layout_width="match_parent"
+        android:background="@android:color/white"
+        android:layout_height="3dip"></View>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="GET:  "
+            android:textColor="@android:color/white"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/att_restful"
+            android:layout_width="wrap_content"
+            android:text="RESTFUL"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/att_Normal"
+            android:layout_width="wrap_content"
+            android:text="NORMAL"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="POST:"
+            android:textColor="@android:color/white"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/att_post_json"
+            android:layout_width="wrap_content"
+            android:text="json"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/att_post_formData"
+            android:layout_width="wrap_content"
+            android:text="formData"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/att_post_file"
+            android:layout_width="wrap_content"
+            android:text="单文件"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/att_post_txtAndFile"
+        android:layout_width="wrap_content"
+        android:text="文本Andfile"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/att_post_fileList"
+        android:layout_width="wrap_content"
+        android:text="多文件"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+</LinearLayout>
