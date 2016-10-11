@@ -1,24 +1,16 @@
-<<<<<<< HEAD
-# TBRequest
-## Top：基于square 出的 Retrofit 底层框架封装的 http请求库</br>
-=======
+
 # RainbowTBRetrofit
 #### Top：基于square 出的 Retrofit 底层框架封装的 http请求库
->>>>>>> release_1.0
+
 
 **说明:**
     <p> 1. 对各Factory进行初始化封装，更换日志打印拦截器，提供debug模式 </p>
     <p> 2. 对Retrofit 接口定义进行了常用模式归纳，具体请求模式限定和抽象 </p>
     <p> 3. 对请求参数统一格式化(GET , JSON,两种 FormData),保持入口参数设置方式相同，方便使用 </p>
     <p> 4. 对CallBack返回统一使用String泛型，替换GsonConveter 为StringConverter </p>
-<<<<<<< HEAD
     <p> 5. 除了CallBack<String> 固定其他Factory类都可以解耦单独立使用 </p>
   
-  
 
-   
-=======
-    <p> 5. 除了CallBack<String> 固定其他Factory类都可以解耦单独使用 </p>
   
 ## Gradle
 > Step1. 在你的**根build.gradle**文件中增加JitPack仓库依赖。
@@ -61,7 +53,8 @@
 ```
 
 #### 2.发送请求
-1. **GET--NORMAL** 
+>
+**1.GET--NORMAL** 
 
 ```java
         void GETByNormal() {
@@ -85,7 +78,7 @@
 
 ```
 
-2. **GET--RESTFUL**
+**2.GET--RESTFUL**
 
 ```java
         void GETByRestful() {
@@ -106,7 +99,7 @@
 
 ```
 
-3. **POST--Json**
+**3.POST--Json**
 
 ```java
          void POSTByJson() {
@@ -130,7 +123,7 @@
 
 ```
 
-4. **POST--FormData**
+**4.POST--FormData**
 
 ```java
          void POSTFormData(){
@@ -155,7 +148,7 @@
 
 ```
 
-5. **POST--Multipart**
+**5.POST--Multipart**
 
 ```java
          void uploadFiles(){
@@ -186,4 +179,4 @@
 ```
 
 >PS:除了GET的RESTFUL 模式 在其他的请求设置参数时都可以使用   TBRequest.create().setParams(map)
->>>>>>> release_1.0
+
