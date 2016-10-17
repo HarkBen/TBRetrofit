@@ -24,11 +24,12 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:appcompat-v7:23.3.0'
     testCompile 'junit:junit:4.12'
     /**
      * ButterKinfe 一键初始化view添加onClick
      */
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.github.HarkBen:Tbretrofit:1.0'
+    //    compile 'com.github.HarkBen:Tbretrofit:1.0'
+    compile project(':rainbowtbretrofit')
 }

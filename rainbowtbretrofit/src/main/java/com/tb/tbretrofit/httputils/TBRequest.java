@@ -4,9 +4,8 @@ package com.tb.tbretrofit.httputils;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.tb.tbretrofit.httputils.factory.RequestInterface;
-import com.tb.tbretrofit.httputils.factory.TBCallBack;
 import com.tb.tbretrofit.httputils.factory.TBRequestFactory;
+import com.tb.tbretrofit.httputils.factory.TBRequestService;
 
 import org.json.JSONObject;
 
@@ -18,6 +17,7 @@ import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import retrofit2.Callback;
 
 /**
  * Create on 2016/9/28.
@@ -32,7 +32,7 @@ import okhttp3.RequestBody;
  */
 public class TBRequest {
     private Map<String,Object> params = null;
-    private RequestInterface request;
+    private TBRequestService request;
     /**
      * 默认创建一个Obj Map
      * 填充基础参数
@@ -64,13 +64,13 @@ public class TBRequest {
      * 普通模式
      * 拼接参数直接使用 map即可
      * @param url
-     * @param tBCallBack
+     * @param callback
      */
-    public void get(String url, TBCallBack tBCallBack){
+    public void get(String url, Callback<String> callback){
         if(null == params || params.isEmpty()){
-            request.get(url,tBCallBack);
+            request.get(url,callback);
         }else {
-            request.get(url, params,tBCallBack);
+            request.get(url, params,callback);
         }
     }
 
@@ -78,10 +78,10 @@ public class TBRequest {
      * RESTFUL  模式
      * @param url
      * @param values
-     * @param tBCallBack
+     * @param callback
      */
-    public void get(String url,String[] values, TBCallBack tBCallBack){
-        request.get(url, values,tBCallBack);
+    public void get(String url,String[] values, Callback<String> callback){
+        request.get(url, values,callback);
     }
 
 
@@ -91,10 +91,10 @@ public class TBRequest {
      * 将map参数转换为 JSON格式提交
      * Content-Type: application/json
      * @param url
-     * @param tbCallBack
+     * @param callback
      */
-    public void postJson(String url,TBCallBack tbCallBack){
-        request.postJson(url,map2JSONObject(),tbCallBack);
+    public void postJson(String url,Callback<String> callback){
+        request.postJson(url,map2JSONObject(),callback);
     }
 
 
@@ -103,10 +103,10 @@ public class TBRequest {
      * 设置参数类型和Content-Type
      * @param url
      * @param body
-     * @param tbCallBack
+     * @param callback
      */
-    public void postRequestBody(String url,RequestBody body,TBCallBack tbCallBack){
-        request.postRequestBody(url,body,tbCallBack);
+    public void postRequestBody(String url,RequestBody body,Callback<String> callback){
+        request.postRequestBody(url,body,callback);
     }
 
 
@@ -114,25 +114,25 @@ public class TBRequest {
      * 单纯表单
      * Content-Type: application/x-www-form-urlencoded
      * @param url
-     * @param tBCallBack
+     * @param callback
      */
-    public void postFormData(String url,TBCallBack tBCallBack){
-        request.postFormData(url,params, tBCallBack);
+    public void postFormData(String url,Callback<String> callback){
+        request.postFormData(url,params, callback);
     }
 
-    public void postFormDataFile(String url,@NonNull File file ,TBCallBack tbCallBack){
-        postFormDataFile(url,file,null,tbCallBack);
+    public void postFormDataFile(String url,@NonNull File file ,Callback<String> callback){
+        postFormDataFile(url,file,null,callback);
     }
-    public void postFormDataFiles(String url, @NonNull List<File> files, TBCallBack tbCallBack){
-        postFormDataFiles(url,files,null,tbCallBack);
+    public void postFormDataFiles(String url, @NonNull List<File> files, Callback<String> callback){
+        postFormDataFiles(url,files,null,callback);
     }
 
-    public void postFormDataFile(String url, @NonNull  File file, @Nullable String contentType, TBCallBack tBCallBack) {
+    public void postFormDataFile(String url, @NonNull  File file, @Nullable String contentType, Callback<String> callback) {
         if(null == file) throw new NullPointerException("Hi Man!  the file is null!");
         if(file.isDirectory()) throw new NullPointerException("oh Shit! the file is Directory,don't use floder!");
         List<File> files = new ArrayList<>();
         files.add(file);
-        postFormDataFiles(url,files,contentType,tBCallBack);
+        postFormDataFiles(url,files,contentType,callback);
     }
 
     /**
@@ -141,16 +141,16 @@ public class TBRequest {
      * @param url
      * @param files
      * @param contentType
-     * @param tbCallBack
+     * @param callback
      */
-    public void postFormDataFiles(String url, List<File> files, @Nullable String contentType, TBCallBack tbCallBack){
+    public void postFormDataFiles(String url, List<File> files, @Nullable String contentType, Callback<String> callback){
         MediaType mediatype = null;
         if(null != contentType && !contentType.equals(""))
             mediatype = MediaType.parse(contentType);
         else
             mediatype = MediaType.parse("octet-stream");
 
-        request.postFormDataFiles(url,params,files,mediatype,tbCallBack);
+        request.postFormDataFiles(url,params,files,mediatype,callback);
     }
 
 

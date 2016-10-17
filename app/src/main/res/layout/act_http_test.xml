@@ -76,4 +76,16 @@
         android:text="多文件"
         android:layout_height="wrap_content" />
 </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/att_post_test302"
+            android:layout_width="wrap_content"
+            android:text="302测试"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
 </LinearLayout>

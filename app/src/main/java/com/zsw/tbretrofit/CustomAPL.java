@@ -3,8 +3,9 @@ package com.zsw.tbretrofit;
 import android.app.Application;
 
 import com.tb.tbretrofit.httputils.factory.TBOkHttpClientFactory;
-import com.tb.tbretrofit.httputils.factory.TBRequestFactory;
+
 import com.tb.tbretrofit.httputils.factory.TBRetrofitFactory;
+import com.tb.tbretrofit.httputils.factory.TBRequestFactory;
 
 /**
  * Create on 2016/10/11.

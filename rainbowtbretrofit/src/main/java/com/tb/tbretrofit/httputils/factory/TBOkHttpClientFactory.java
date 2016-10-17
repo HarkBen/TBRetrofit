@@ -22,7 +22,7 @@ import okhttp3.OkHttpClient;
  *         github  https://github.com/HarkBen
  * @Last_update time - 2016年10月8日14:38:32
  */
-public class TBOkHttpClientFactory {
+public final class TBOkHttpClientFactory {
 
     private static OkHttpClient okHttpClient;
 
@@ -78,8 +78,8 @@ public class TBOkHttpClientFactory {
         }
 
         /**
-         *这里使用的LogInterceptor 内部采用的也是日志类 Ｌ　
-         *对于 L的 debug 模式的更改这里统一受约束
+         *这里使用的LogInterceptor 内部采用的也是日志类 TbLog　
+         *对于 Tblog的 debug 模式的更改这里统一受约束
          * @return
          */
         public  void build() {
@@ -110,7 +110,7 @@ public class TBOkHttpClientFactory {
 
     public static final OkHttpClient getOkHttpClient() {
         if (null == okHttpClient) {
-            throw new NullPointerException("uh~. When you initialize  TBOkHttpClientFactory,you didn't build OkClient");
+            throw new NullPointerException("uh~. When you initializing  TBOkHttpClientFactory,you didn't build okHttpClient");
         }else{
             return okHttpClient;
         }

@@ -17,9 +17,9 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
  *         github  https://github.com/HarkBen
  * @Last_update time - 2016年9月19日14:33:21
  */
-public  class TBRetrofitFactory {
+public final  class TBRetrofitFactory {
 
-    private   Retrofit retrofit;
+    private static  Retrofit retrofit;
 
     /**
      * volatile 简单解释

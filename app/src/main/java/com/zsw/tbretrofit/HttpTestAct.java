@@ -8,10 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
+import com.tb.tbretrofit.TbLog;
 import com.tb.tbretrofit.httputils.TBRequest;
 import com.tb.tbretrofit.httputils.factory.TBCallBack;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,9 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.zsw.tbretrofit.API.GITHUB_RESTFUL;
 
@@ -33,6 +38,8 @@ import static com.zsw.tbretrofit.API.GITHUB_RESTFUL;
  * Last_Update - 2016/9/30
  */
 public class HttpTestAct extends AppCompatActivity {
+    private final static String TAG = "HttpTestAct";
+
     @Bind(R.id.att_log)
     EditText attLog;
     @Bind(R.id.att_restful)
@@ -49,7 +56,8 @@ public class HttpTestAct extends AppCompatActivity {
     Button attPostFileList;
     @Bind(R.id.att_post_formData)
     Button attPostFormData;
-
+    @Bind(R.id.att_post_test302)
+    Button attPostTest302;
 
 
 
@@ -62,7 +70,7 @@ public class HttpTestAct extends AppCompatActivity {
 
 
 
-    @OnClick({R.id.att_restful, R.id.att_post_formData,R.id.att_Normal, R.id.att_post_json, R.id.att_post_file, R.id.att_post_txtAndFile, R.id.att_post_fileList})
+    @OnClick({R.id.att_restful,R.id.att_post_test302, R.id.att_post_formData,R.id.att_Normal, R.id.att_post_json, R.id.att_post_file, R.id.att_post_txtAndFile, R.id.att_post_fileList})
     public void onClick(View view) {
         attLog.setText("---------清除日志-------------");
         switch (view.getId()) {
@@ -90,7 +98,56 @@ public class HttpTestAct extends AppCompatActivity {
             case R.id.att_post_formData:
                 POSTFormData();
                 break;
+            case R.id.att_post_test302:
+                request302();
+                break;
         }
+    }
+
+    final static  Callback<String> callback = new Callback<String>() {
+        @Override
+        public void onResponse(final Call<String> tcall, Response<String> response) {
+            int code = response.code();
+            TbLog.printD(TAG,"code=="+code);
+            String body = response.body();
+            TbLog.printD(TAG,"body=="+body);
+            String msg = response.message();
+            TbLog.printD(TAG,"msg=="+msg);
+            if(code == 302){
+                TBRequest.create()
+                        .postJson(API.LOGINTOBR, new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                int code = response.code();
+                                TbLog.printD(TAG,"code=="+code);
+                                String body = response.body();
+                                TbLog.printD(TAG,"body=="+body);
+                                tcall.clone().enqueue(callback);
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+
+                            }
+                        });
+
+
+
+            }
+
+        }
+
+        @Override
+        public void onFailure(Call<String> call, Throwable t) {
+
+        }
+    };
+    void request302(){
+
+
+        TBRequest.create()
+                .postJson(API.TEST_302, callback);
+
     }
 
     void showResult(String result) {

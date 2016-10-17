@@ -12,14 +12,19 @@ package com.zsw.tbretrofit;
  */
 
 public class API {
+  private static   String getURL(String name){
+        return BASEURL+name;
+    }
 
-    public static final String BASEURL ="http://192.168.0.229:8080/";
+    public static final String BASEURL ="http://192.168.0.165:8080/";
 
-    public static final String UPLOADFILE = "http://192.168.0.229:8080/upload";
+    public static final String UPLOADFILE = getURL("upload");
 
-    public static final String LOGINTOBR = "http://192.168.0.229:8080/json";
+    public static final String TEST_302 = getURL("test302");
 
-    public static final String FORMDATA = "http://192.168.0.229:8080/formdata";
+    public static final String LOGINTOBR = getURL("json");
+
+    public static final String FORMDATA = getURL("formdata");
 
     public static final String GITHUB_RESTFUL = "https://api.github.com/users";
 

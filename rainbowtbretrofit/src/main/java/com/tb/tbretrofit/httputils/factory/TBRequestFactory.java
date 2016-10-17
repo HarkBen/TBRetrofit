@@ -23,7 +23,7 @@ import retrofit2.Callback;
  * author Ben
  * Last_Update - 2016/9/27
  */
-public class TBRequestFactory implements RequestInterface{
+public class TBRequestFactory implements TBRequestService {
 
     private static TBRetrofitService tBRetrofitService;
 
