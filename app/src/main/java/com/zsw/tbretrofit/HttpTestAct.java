@@ -113,6 +113,7 @@ public class HttpTestAct extends AppCompatActivity {
             TbLog.printD(TAG,"body=="+body);
             String msg = response.message();
             TbLog.printD(TAG,"msg=="+msg);
+
             if(code == 302){
                 TBRequest.create()
                         .postJson(API.LOGINTOBR, new Callback<String>() {

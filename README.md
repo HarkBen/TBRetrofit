@@ -23,10 +23,10 @@
             }
 ```  
 
-> Step2. 在你的module的build.gradle文件中增加RainbowLibrary依赖。
+> Step2. 在你的module的build.gradle文件中增加TBRetrofit依赖。
 ```gradle
         dependencies {
-	          compile 'com.github.HarkBen:Tbretrofit:1.0'
+	          compile 'com.github.HarkBen:TBRetrofit:1.1'
 	    }   
 ```   
 
