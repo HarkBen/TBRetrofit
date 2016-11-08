@@ -5,7 +5,7 @@ import android.app.Application;
 import com.tb.tbretrofit.httputils.factory.TBOkHttpClientFactory;
 
 import com.tb.tbretrofit.httputils.factory.TBRetrofitFactory;
-import com.tb.tbretrofit.httputils.factory.TBRequestFactory;
+import com.tb.tbretrofit.httputils.factory.TBTranslateFactory;
 
 /**
  * Create on 2016/10/11.
@@ -27,7 +27,10 @@ public class CustomAPL extends Application {
                 .setTimeout_read(10)
                 .setTimeout_write(10)
                 .build();
-        TBRequestFactory.build(TBRetrofitFactory.getInstance(API.BASEURL));
+        TBRetrofitFactory.Builder.create()
+                .setBaseUrl(API.BASEURL)
+                .builder(TBOkHttpClientFactory.getOkHttpClient());
+        TBTranslateFactory.build();
 
     }
 }

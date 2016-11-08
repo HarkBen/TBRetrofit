@@ -73,7 +73,7 @@ public final class TBRetrofitFactory {
         /**
          * Remmber!,You must be  set baseUrl，please !
          */
-        private static Builder create() {
+        public static Builder create() {
             bConverterFactorys = new ArrayList<>();
             bCallAdapterFactorys = new ArrayList<>();
             return new Builder();

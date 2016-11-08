@@ -9,14 +9,12 @@ import android.widget.EditText;
 
 
 import com.tb.tbretrofit.TbLog;
-import com.tb.tbretrofit.httputils.TBRequest;
-import com.tb.tbretrofit.httputils.factory.TBCallBack;
+import com.tb.tbretrofit.httputils.view.TBCallBack;
+import com.tb.tbretrofit.httputils.view.TBRequest;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
