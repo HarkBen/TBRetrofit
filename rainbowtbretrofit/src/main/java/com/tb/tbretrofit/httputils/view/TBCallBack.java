@@ -1,6 +1,4 @@
-package com.tb.tbretrofit.httputils.factory;
-
-import com.tb.tbretrofit.httputils.TBRequest;
+package com.tb.tbretrofit.httputils.view;
 
 import retrofit2.Call;
 import retrofit2.Callback;

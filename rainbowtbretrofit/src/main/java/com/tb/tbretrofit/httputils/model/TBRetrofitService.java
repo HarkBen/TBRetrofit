@@ -1,4 +1,6 @@
-package com.tb.tbretrofit.httputils.factory;
+package com.tb.tbretrofit.httputils.model;
+
+import com.tb.tbretrofit.httputils.factory.TBRetrofitFactory;
 
 import java.util.Map;
 
