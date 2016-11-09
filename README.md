@@ -1,19 +1,23 @@
+![pppm.jpg](picture/pppm.png)
+
 
 # RainbowTBRetrofit
 #### Top：基于square 出的 Retrofit 底层框架封装的 http请求库
 
 
 **说明:**
-    <p> 1. 对各Factory进行初始化封装，更换日志打印拦截器，提供debug模式 </p>
+    <p> 1. 对各个初始化Factory进行封装，统一配置，更换日志打印拦截器，提供debug模式 </p>
     <p> 2. 对Retrofit 接口定义进行了常用模式归纳，具体请求模式限定和抽象 </p>
     <p> 3. 对请求参数统一格式化(GET , JSON,两种 FormData),保持入口参数设置方式相同，方便使用 </p>
     <p> 4. 对CallBack返回统一使用String泛型，替换GsonConveter 为StringConverter </p>
     <p> 5. 除了CallBack<String> 固定其他Factory类都可以解耦单独立使用 </p>
+    
   
 
   
 ## Gradle
 > Step1. 在你的**根build.gradle**文件中增加JitPack仓库依赖。
+
 ```gradle
          allprojects {
                 repositories {
@@ -24,6 +28,7 @@
 ```  
 
 > Step2. 在你的module的build.gradle文件中增加TBRetrofit依赖。
+
 ```gradle
         dependencies {
 	          compile 'com.github.HarkBen:TBRetrofit:1.1'
@@ -39,21 +44,31 @@
                 @Override
                 public void onCreate() {
                     super.onCreate();
-                    TBOkHttpClientFactory.Builder.create()
-                            .setDebug(true)
-                            .syncCookie(this)
-                            .setTimeout_connection(10)
-                            .setTimeout_read(10)
-                            .setTimeout_write(10)
-                            .build();
-                    TBRequestFactory.build(TBRetrofitFactory.getInstance(API.BASEURL));
+                   OkHttpClient okHttpClient =  TBOkHttpClientFactory.Builder.create()
+                                   .setDebug(true)
+                                   .syncCookie(this)
+                                   .setTimeout_connection(10)
+                                   .setTimeout_read(10)
+                                   .setTimeout_write(10)
+                                   .build();
+                           TBRetrofitFactory retrofitFactory =  TBRetrofitFactory.Builder.create()
+                                   .setBaseUrl(API.BASEURL)
+                                   .builder(okHttpClient);
+                           TBTranslateFactory.build(retrofitFactory);
             
                 }
             }
 ```
 
+ > 初始化需要使用三个工厂来构建，这样的好处是解除隐藏关联
+   坏处是，构建的代码多一点，但是自己写个工具类对初始化构建进行封装就好。
+   
+
+
 #### 2.发送请求
->
+
+ > TBRequest 对接口操纵的简化只是提供一个思路，你完全可以按自己的方式来包装。
+
 **1.GET--NORMAL** 
 
 ```java
@@ -178,5 +193,13 @@
 
 ```
 
->PS:除了GET的RESTFUL 模式 在其他的请求设置参数时都可以使用   TBRequest.create().setParams(map)
+>PS:除了GET的REST 模式 在其他的请求设置参数时都可以使用   TBRequest.create().setParams(map)
 
+<br>
+
+---
+ **关于拓展：**
+ 
+关于拓展，需要更换CallBack返回，或者增加delete put insert接口时，只需要写自己的
+   Service 并继承 TBRetrofitService ,按实际需要拓展TBTranslateFactory和TBTranslateService即可
+   尽量不要将Service接口的参数进行K-V限定，放到TBTranslateFactory中来实现细节，不然复用性几乎为0，也没必要封装。
