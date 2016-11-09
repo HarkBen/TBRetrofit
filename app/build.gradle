@@ -30,6 +30,6 @@ dependencies {
      * ButterKinfe 一键初始化view添加onClick
      */
     compile 'com.jakewharton:butterknife:7.0.1'
-    //    compile 'com.github.HarkBen:TBRetrofit:1.1'
-    compile project(':rainbowtbretrofit')
+        compile 'com.github.HarkBen:TBRetrofit:1.2'
+//    compile project(':rainbowtbretrofit')
 }

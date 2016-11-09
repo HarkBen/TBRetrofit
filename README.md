@@ -31,7 +31,7 @@
 
 ```gradle
         dependencies {
-	          compile 'com.github.HarkBen:TBRetrofit:1.1'
+	          compile 'com.github.HarkBen:TBRetrofit:1.2'
 	    }   
 ```   
 
