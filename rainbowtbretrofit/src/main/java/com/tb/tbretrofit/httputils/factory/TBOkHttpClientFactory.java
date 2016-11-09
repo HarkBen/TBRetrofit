@@ -8,6 +8,7 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.tb.tbretrofit.TbLog;
+import com.tb.tbretrofit.httputils.exception.RepeatBuildException;
 import com.tb.tbretrofit.httputils.tools.LogInterceptor;
 
 import java.util.ArrayList;
@@ -94,10 +95,10 @@ public final class TBOkHttpClientFactory {
         /**
          * 这里使用的LogInterceptor 内部采用的也是日志类 TbLog
          * 对于 Tblog的 debug 模式的更改这里统一受约束
-         *
+         * 保证所有Client统一性，不允许重复调用build()方法
          * @return
          */
-        public void build() {
+        public OkHttpClient  build() {
             if (null == okHttpClient) {
                 synchronized (TBOkHttpClientFactory.class) {
                     if (null == okHttpClient) {
@@ -120,15 +121,16 @@ public final class TBOkHttpClientFactory {
                         }
 
                         TbLog.setDeBug(isDebug);
-                        okHttpClient = builder.build();
+                        return okHttpClient = builder.build();
                     }
                 }
             }
+                throw  new RepeatBuildException();
         }
     }
 
 
-    public static final OkHttpClient getOkHttpClient() {
+    public static final OkHttpClient getInstance() {
         if (null == okHttpClient) {
             throw new NullPointerException("uh~. When you initializing  TBOkHttpClientFactory you didn't build okHttpClient");
         } else {

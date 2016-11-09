@@ -1,6 +1,7 @@
 package com.tb.tbretrofit.httputils.factory;
 
 
+import com.tb.tbretrofit.httputils.exception.RepeatBuildException;
 import com.tb.tbretrofit.httputils.model.TBRetrofitService;
 import com.tb.tbretrofit.httputils.tools.StringConverterFactory;
 
@@ -79,7 +80,7 @@ public final class TBRetrofitFactory {
             return new Builder();
         }
 
-        public void builder(OkHttpClient okHttpClient) {
+        public TBRetrofitFactory builder(OkHttpClient okHttpClient) {
             if (null == retorfitManager) {
                 synchronized ((TBRetrofitFactory.class)) {
                     if (null == retorfitManager) {
@@ -96,10 +97,11 @@ public final class TBRetrofitFactory {
                         builder.addConverterFactory(StringConverterFactory.create());
                         builder.addCallAdapterFactory(RxJavaCallAdapterFactory.create());
                         retrofit = builder.build();
-                        retorfitManager = new TBRetrofitFactory();
+                      return   retorfitManager = new TBRetrofitFactory();
                     }
                 }
             }
+            throw  new RepeatBuildException();
         }
     }
 

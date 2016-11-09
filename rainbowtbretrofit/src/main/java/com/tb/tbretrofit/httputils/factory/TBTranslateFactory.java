@@ -3,6 +3,7 @@ package com.tb.tbretrofit.httputils.factory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.tb.tbretrofit.httputils.exception.RepeatBuildException;
 import com.tb.tbretrofit.httputils.model.TBRetrofitService;
 import com.tb.tbretrofit.httputils.model.TBTranslateService;
 
@@ -30,29 +31,30 @@ public class TBTranslateFactory implements TBTranslateService {
 
     private static TBRetrofitService tBRetrofitService;
 
-    private static TBTranslateService tBRequestService;
+    private static TBTranslateService tBTranslateService;
 
-    private TBTranslateFactory() {
-        tBRetrofitService = TBRetrofitFactory.getInstance().createService(TBRetrofitService.class);
+    private TBTranslateFactory(TBRetrofitFactory tbRetrofitFactory) {
+        tBRetrofitService = tbRetrofitFactory.createService(TBRetrofitService.class);
     }
 
     /**
      * 保证内部的RetrofitService 单例
      */
-    public static void build() {
-        if (null == tBRequestService) {
+    public static TBTranslateService build(TBRetrofitFactory tbRetrofitFactory) {
+        if (null == tBTranslateService) {
             synchronized (TBTranslateFactory.class) {
-                if (null == tBRequestService)
-                    tBRequestService = new TBTranslateFactory();
+                if (null == tBTranslateService)
+                  return   tBTranslateService = new TBTranslateFactory(tbRetrofitFactory);
             }
         }
+        throw  new RepeatBuildException();
     }
 
     public static TBTranslateService getInstance() {
-        if (null == tBRequestService) {
+        if (null == tBTranslateService) {
             throw new NullPointerException(TBTranslateFactory.class.getPackage() + ".TBTranslateFactory does not build!");
         } else {
-            return tBRequestService;
+            return tBTranslateService;
         }
     }
 
