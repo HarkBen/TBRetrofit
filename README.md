@@ -1,7 +1,7 @@
 ![pppm.jpg](picture/pppm.png)
 
 
-# RainbowTBRetrofit
+# TBRetrofit1.2
 #### Top：基于square 出的 Retrofit 底层框架封装的 http请求库
 
 
