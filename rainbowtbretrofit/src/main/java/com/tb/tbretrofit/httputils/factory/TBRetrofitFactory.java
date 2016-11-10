@@ -2,7 +2,7 @@ package com.tb.tbretrofit.httputils.factory;
 
 
 import com.tb.tbretrofit.httputils.exception.RepeatBuildException;
-import com.tb.tbretrofit.httputils.model.TBRetrofitService;
+import com.tb.tbretrofit.httputils.service.TBRetrofitService;
 import com.tb.tbretrofit.httputils.tools.StringConverterFactory;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
  *         github  https://github.com/HarkBen
  * @Last_update time - 2016年9月19日14:33:21
  */
-public final class TBRetrofitFactory {
+public class TBRetrofitFactory {
 
     private static Retrofit retrofit;
     private volatile static TBRetrofitFactory retorfitManager;

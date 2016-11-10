@@ -1,11 +1,11 @@
 package com.tb.tbretrofit.httputils.factory;
 
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.tb.tbretrofit.httputils.exception.RepeatBuildException;
-import com.tb.tbretrofit.httputils.model.TBRetrofitService;
-import com.tb.tbretrofit.httputils.model.TBTranslateService;
+import com.tb.tbretrofit.httputils.service.TBRetrofitService;
+import com.tb.tbretrofit.httputils.service.TBTranslateInterface;
 
 import org.json.JSONObject;
 
@@ -27,38 +27,16 @@ import retrofit2.Callback;
  * author Ben
  * Last_Update - 2016/9/27
  */
-public class TBTranslateFactory implements TBTranslateService {
+public abstract   class TBTranslateFactory implements TBTranslateInterface {
 
     private static TBRetrofitService tBRetrofitService;
 
-    private static TBTranslateService tBTranslateService;
-
-    private TBTranslateFactory(TBRetrofitFactory tbRetrofitFactory) {
-        tBRetrofitService = tbRetrofitFactory.createService(TBRetrofitService.class);
+    public TBTranslateFactory() {
+        tBRetrofitService = createService();
     }
 
-    /**
-     * 保证内部的RetrofitService 单例
-     */
-    public static TBTranslateService build(TBRetrofitFactory tbRetrofitFactory) {
-        if (null == tBTranslateService) {
-            synchronized (TBTranslateFactory.class) {
-                if (null == tBTranslateService)
-                  return   tBTranslateService = new TBTranslateFactory(tbRetrofitFactory);
-            }
-        }
-        throw  new RepeatBuildException();
-    }
+    public abstract  TBRetrofitService createService();
 
-    public static TBTranslateService getInstance() {
-        if (null == tBTranslateService) {
-            throw new NullPointerException(TBTranslateFactory.class.getPackage() + ".TBTranslateFactory does not build!");
-        } else {
-            return tBTranslateService;
-        }
-    }
-
-    //GET 请求--------------------------------------
 
     /**
      * 无参
@@ -67,6 +45,7 @@ public class TBTranslateFactory implements TBTranslateService {
      * @param callBack
      */
     @Override
+    @CallSuper
     public void get(String url, Callback<String> callBack) {
         tBRetrofitService.get(url).enqueue(callBack);
     }
@@ -80,6 +59,7 @@ public class TBTranslateFactory implements TBTranslateService {
      * @RequestMapping（/users/{name}/{id}）
      */
     @Override
+    @CallSuper
     public void get(String url, String[] values, Callback<String> callBack) {
         if (null == values || values.length == 0) {
             get(url, callBack);
@@ -102,6 +82,7 @@ public class TBTranslateFactory implements TBTranslateService {
      * @RequestMapping（/users/?name=xx&id=xx）
      */
     @Override
+    @CallSuper
     public void get(String url, Map<String, Object> map, Callback<String> callBack) {
         tBRetrofitService.get(url, map).enqueue(callBack);
     }
@@ -117,6 +98,7 @@ public class TBTranslateFactory implements TBTranslateService {
      * @param callBack
      */
     @Override
+    @CallSuper
     public void postJson(String url, JSONObject json, Callback<String> callBack) {
         tBRetrofitService.postJson(url, json.toString()).enqueue(callBack);
     }
@@ -129,6 +111,7 @@ public class TBTranslateFactory implements TBTranslateService {
      * @param callBack
      */
     @Override
+    @CallSuper
     public void postRequestBody(String url, RequestBody body, Callback<String> callBack) {
         tBRetrofitService.post(url, body).enqueue(callBack);
     }
@@ -143,12 +126,14 @@ public class TBTranslateFactory implements TBTranslateService {
      * @param callBack
      */
     @Override
+    @CallSuper
     public void postFormData(String url, Map<String, Object> map, Callback<String> callBack) {
         tBRetrofitService.postForm(url, map).enqueue(callBack);
     }
 
 
     @Override
+    @CallSuper
     public void postFormDataFiles(String url, @Nullable Map<String, Object> map, @NonNull List<File> files, MediaType contentType, Callback<String> callBack) {
         if (null == files) {
             throw new NullPointerException("files is null!");

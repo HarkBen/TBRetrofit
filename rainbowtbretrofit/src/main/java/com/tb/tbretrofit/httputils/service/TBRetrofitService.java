@@ -1,4 +1,4 @@
-package com.tb.tbretrofit.httputils.model;
+package com.tb.tbretrofit.httputils.service;
 
 import com.tb.tbretrofit.httputils.factory.TBRetrofitFactory;
 

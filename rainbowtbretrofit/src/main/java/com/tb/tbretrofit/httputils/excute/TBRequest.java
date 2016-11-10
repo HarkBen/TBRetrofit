@@ -1,11 +1,10 @@
-package com.tb.tbretrofit.httputils.view;
+package com.tb.tbretrofit.httputils.excute;
 
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.tb.tbretrofit.httputils.factory.TBTranslateFactory;
-import com.tb.tbretrofit.httputils.model.TBTranslateService;
+import com.tb.tbretrofit.httputils.service.TBTranslateInterface;
 
 import org.json.JSONObject;
 
@@ -32,7 +31,10 @@ import retrofit2.Callback;
  */
 public class TBRequest {
     private Map<String, Object> params = null;
-    private TBTranslateService request;
+    /**
+     * 这是只是优化一下，减少Service的创建次数，不用考虑单例
+     */
+    private static TBTranslateInterface request;
 
     /**
      * 默认创建一个Obj Map
@@ -40,7 +42,10 @@ public class TBRequest {
      */
     private TBRequest() {
         params = new HashMap<>();
-        request = TBTranslateFactory.getInstance();
+        if(null == request){
+            request = new TBRequestExecute();
+        }
+
     }
 
     public static TBRequest create() {
@@ -77,7 +82,7 @@ public class TBRequest {
     }
 
     /**
-     * RESTFUL  模式
+     * REST
      *
      * @param url
      * @param values

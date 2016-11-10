@@ -1,4 +1,4 @@
-package com.tb.tbretrofit.httputils.model;
+package com.tb.tbretrofit.httputils.service;
 
 import org.json.JSONObject;
 
@@ -21,7 +21,7 @@ import retrofit2.Callback;
  * author Ben
  * Last_Update - 2016/10/3
  */
-public interface TBTranslateService {
+public interface TBTranslateInterface {
 
     void get(String url, Callback<String> callBack);
 

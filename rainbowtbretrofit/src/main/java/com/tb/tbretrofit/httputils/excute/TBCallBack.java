@@ -1,4 +1,4 @@
-package com.tb.tbretrofit.httputils.view;
+package com.tb.tbretrofit.httputils.excute;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,8 +19,6 @@ public abstract class TBCallBack implements Callback<String> {
     public void onResponse(final  Call<String> call, Response<String> response) {
         onSuccess(response.code(),response.body());
 
-
-
     }
 
     /**
@@ -31,6 +29,7 @@ public abstract class TBCallBack implements Callback<String> {
      */
     @Override
     public void onFailure(Call<String> call, Throwable t) {
+
         onFailed(t.getMessage());
     }
 
