@@ -201,5 +201,4 @@
  **关于拓展：**
  
 关于拓展，需要更换CallBack返回，或者增加delete put insert接口时，只需要写自己的
-   Service 并继承 TBRetrofitService ,按实际需要拓展TBTranslateFactory和TBTranslateService即可
-   尽量不要将Service接口的参数进行K-V限定，放到TBTranslateFactory中来实现细节，不然复用性几乎为0，也没必要封装。
+   Service 并继承 TBRetrofitService ,继承TBRequestExecute类重写createService方法，创建自己的Service即可
