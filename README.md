@@ -201,4 +201,4 @@
  **关于拓展：**
  
 关于拓展，需要更换CallBack返回，或者增加delete put insert接口时，只需要写自己的
-   Service 并继承 TBRetrofitService ,继承TBRequestExecute类重写createService方法，创建自己的Service即可
+   Service 并继承 TBRetrofitService ,继承TBRequestExecute类重写createService方法，创建自己的Service即可   
