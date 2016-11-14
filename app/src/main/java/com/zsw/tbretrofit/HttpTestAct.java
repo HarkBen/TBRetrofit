@@ -8,11 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-import com.tb.tbretrofit.TbLog;
-import com.tb.tbretrofit.httputils.view.TBCallBack;
-import com.tb.tbretrofit.httputils.view.TBRequest;
+import com.tb.tbretrofit.httputils.tools.TbLog;
+import com.tb.tbretrofit.httputils.excute.TBCallBack;
+import com.tb.tbretrofit.httputils.excute.TBRequest;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.zsw.tbretrofit.API.GITHUB_RESTFUL;
 
 /**
  * Create on 2016/9/30.
@@ -126,7 +126,11 @@ public class HttpTestAct extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<String> call, Throwable t) {
-
+                                try {
+                                    call.clone().execute();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         });
 
@@ -138,7 +142,7 @@ public class HttpTestAct extends AppCompatActivity {
 
         @Override
         public void onFailure(Call<String> call, Throwable t) {
-
+                TbLog.printD(TAG,"onFailure"+t.getMessage());
         }
     };
     void request302(){

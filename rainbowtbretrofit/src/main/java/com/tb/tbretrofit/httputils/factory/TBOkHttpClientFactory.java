@@ -7,7 +7,7 @@ import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.tb.tbretrofit.TbLog;
+import com.tb.tbretrofit.httputils.tools.TbLog;
 import com.tb.tbretrofit.httputils.exception.RepeatBuildException;
 import com.tb.tbretrofit.httputils.tools.LogInterceptor;
 
