@@ -72,7 +72,7 @@ public class TBRetrofitFactory {
         }
 
         /**
-         * Remmber!,You must be  set baseUrl，please !
+         * Remmber!,You must be  set baseUrl !
          */
         public static Builder create() {
             bConverterFactorys = new ArrayList<>();
@@ -80,7 +80,7 @@ public class TBRetrofitFactory {
             return new Builder();
         }
 
-        public TBRetrofitFactory builder(OkHttpClient okHttpClient) {
+        public TBRetrofitFactory builder() {
             if (null == retorfitManager) {
                 synchronized ((TBRetrofitFactory.class)) {
                     if (null == retorfitManager) {
@@ -107,9 +107,9 @@ public class TBRetrofitFactory {
 
 
     /**
-     * 这里使用耦合性很强的组合关系，因为这里我不想retrofit被单独解耦使用。
+     * 这里使用耦合性很强的组合关系，因为这里不想retrofit被单独解耦使用。
      * 因为一旦那样，后面对接口和回掉的封装就毫无意义，相对来说因为只会使用
-     * createService方法，所以后续对retrofit的增持不会对下有影响，依赖关系单一。
+     * createService方法，所以后续对retrofit的增持不会对上有影响，依赖关系单一。
      *
      * @return
      */
