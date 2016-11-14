@@ -38,7 +38,7 @@ public class CustomAPL extends Application {
         //自己写个工具类对初始化构建进行封装就好。
         //对于转译工厂TBTranslateFactory，对TBRetrofitFactory是强制依赖的。
         //关于拓展，需要更换CallBack返回，或者增加delete put insert接口时，只需要写自己的
-        //Service 并继承 TBRetrofitService ,按需拓展TBTranslateFactory和TBTranslateService即可
+        //Service 并继承 TBRetrofitService ,按需拓展TBTranslateFactory
 
     }
 }
