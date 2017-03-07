@@ -11,7 +11,7 @@ package com.tb.tbretrofit.httputils.exception;
 public class RepeatBuildException extends RuntimeException {
     public RepeatBuildException(){
         this("Client was builded.Don't repeat build." +
-                "may you should invoking getInstance() ");
+                "may be you should invoking getInstance() ");
     }
     public RepeatBuildException(String errorMsg){
         super(errorMsg);

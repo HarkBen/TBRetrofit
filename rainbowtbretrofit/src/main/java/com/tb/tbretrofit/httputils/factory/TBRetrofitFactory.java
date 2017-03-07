@@ -106,13 +106,6 @@ public class TBRetrofitFactory {
     }
 
 
-    /**
-     * 这里使用耦合性很强的组合关系，因为这里不想retrofit被单独解耦使用。
-     * 因为一旦那样，后面对接口和回掉的封装就毫无意义，相对来说因为只会使用
-     * createService方法，所以后续对retrofit的增持不会对上有影响，依赖关系单一。
-     *
-     * @return
-     */
     public static TBRetrofitFactory getInstance() {
         if (null == retorfitManager) {
             throw new NullPointerException("uh~,you didn't build TBRetrofitFactory ");

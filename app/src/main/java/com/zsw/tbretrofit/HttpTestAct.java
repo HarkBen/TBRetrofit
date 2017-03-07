@@ -147,7 +147,6 @@ public class HttpTestAct extends AppCompatActivity {
     };
     void request302(){
 
-
         TBRequest.create()
                 .postJson(API.TEST_302, callback);
 
@@ -192,6 +191,7 @@ public class HttpTestAct extends AppCompatActivity {
                     }
 
                 });
+
     }
 
     void POSTFormData(){

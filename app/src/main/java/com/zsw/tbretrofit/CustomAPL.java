@@ -23,7 +23,8 @@ public class CustomAPL extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-      OkHttpClient okHttpClient =  TBOkHttpClientFactory.Builder.create()
+      OkHttpClient okHttpClient =
+                TBOkHttpClientFactory.Builder.create()
                 .setDebug(true)
                 .syncCookie(this)
                 .setTimeout_connection(10)
