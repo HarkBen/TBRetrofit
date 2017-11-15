@@ -13,6 +13,7 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -47,6 +48,7 @@ public abstract   class TBTranslateFactory implements TBTranslateInterface {
     @Override
     @CallSuper
     public void get(String url, Callback<String> callBack) {
+
         tBRetrofitService.get(url).enqueue(callBack);
     }
 

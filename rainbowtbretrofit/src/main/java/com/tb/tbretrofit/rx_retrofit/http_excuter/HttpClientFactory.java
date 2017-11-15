@@ -1,4 +1,4 @@
-package com.tb.tbretrofit.httputils.factory;
+package com.tb.tbretrofit.rx_retrofit.http_excuter;
 
 import android.app.Application;
 import android.content.Context;
@@ -7,9 +7,9 @@ import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.tb.tbretrofit.httputils.tools.TbLog;
 import com.tb.tbretrofit.httputils.exception.RepeatBuildException;
 import com.tb.tbretrofit.httputils.tools.LogInterceptor;
+import com.tb.tbretrofit.httputils.tools.TbLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +19,18 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 
 /**
- * Create on 2016/8/19.
- *
- * @author Ben
- *         Description-构建okhttpClient
- *         <p>
- *         github  https://github.com/HarkBen
- * @Last_update time - 2016年10月8日14:38:32
+ * @描述： -
+ * -
+ * @作者：zhusw
+ * @创建时间：17/11/15 下午3:58
+ * @最后更新时间：17/11/15 下午3:58
  */
-public final class TBOkHttpClientFactory {
-
+public class HttpClientFactory {
     private static OkHttpClient okHttpClient;
 
+    private HttpClientFactory(){
+
+    }
 
     public static final class Builder {
 
@@ -56,37 +56,37 @@ public final class TBOkHttpClientFactory {
             mInterceptors = new ArrayList<>();
         }
 
-        public static final Builder create() {
-            return new Builder();
+        public static final HttpClientFactory.Builder create() {
+            return new HttpClientFactory.Builder();
         }
 
-        public Builder addInterceptor(Interceptor interceptor) {
+        public HttpClientFactory.Builder addInterceptor(Interceptor interceptor) {
             mInterceptors.add(interceptor);
             return this;
         }
 
-        public Builder setDebug(boolean isDebug) {
+        public HttpClientFactory.Builder setDebug(boolean isDebug) {
             this.isDebug = isDebug;
             return this;
         }
 
-        public Builder setTimeout_read(int timeout_read) {
+        public HttpClientFactory.Builder setTimeout_read(int timeout_read) {
             this.TIMEOUT_READ = timeout_read;
             return this;
         }
 
-        public Builder setTimeout_connection(int timeout_connection) {
+        public HttpClientFactory.Builder setTimeout_connection(int timeout_connection) {
             this.TIMEOUT_CONNECTION = timeout_connection;
             return this;
         }
 
-        public Builder setTimeout_write(int TIMEOUT_WRITE) {
+        public HttpClientFactory.Builder setTimeout_write(int TIMEOUT_WRITE) {
             this.TIMEOUT_WRITE = TIMEOUT_WRITE;
             return this;
 
         }
 
-        public Builder syncCookie(Application context) {
+        public HttpClientFactory.Builder syncCookie(Application context) {
             this.context = context;
             return this;
         }
@@ -99,7 +99,7 @@ public final class TBOkHttpClientFactory {
          */
         public OkHttpClient  build() {
             if (null == okHttpClient) {
-                synchronized (TBOkHttpClientFactory.class) {
+                synchronized (HttpClientFactory.class) {
                     if (null == okHttpClient) {
                         OkHttpClient.Builder builder = new OkHttpClient.Builder();
                         builder.connectTimeout(this.TIMEOUT_CONNECTION, TimeUnit.SECONDS);
@@ -124,7 +124,7 @@ public final class TBOkHttpClientFactory {
                     }
                 }
             }
-                throw  new RepeatBuildException();
+            throw  new RepeatBuildException();
         }
     }
 
@@ -136,4 +136,5 @@ public final class TBOkHttpClientFactory {
             return okHttpClient;
         }
     }
+
 }

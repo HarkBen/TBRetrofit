@@ -33,5 +33,6 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
     compile 'com.github.franmontiel:PersistentCookieJar:v1.0.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
+    compile 'io.reactivex:rxandroid:1.0.1'
     compile 'com.android.support:support-annotations:24.2.1'
 }
