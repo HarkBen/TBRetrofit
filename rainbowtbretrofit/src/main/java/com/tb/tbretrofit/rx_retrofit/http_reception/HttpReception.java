@@ -2,6 +2,8 @@ package com.tb.tbretrofit.rx_retrofit.http_reception;
 
 
 import com.tb.tbretrofit.rx_retrofit.http_contact.HttpExcuterContactI;
+import com.tb.tbretrofit.rx_retrofit.http_contact.HttpExcuterContactIml;
+import com.tb.tbretrofit.rx_retrofit.http_excuter.JsonBody;
 
 /**
  * @描述： -
@@ -26,7 +28,8 @@ import com.tb.tbretrofit.rx_retrofit.http_contact.HttpExcuterContactI;
 
     public <T> void  get(String url ,HttpResponseListener<T> listener){
 
-
+        HttpExcuterContactIml httpExcuterContactIml = new HttpExcuterContactIml(listener);
+        httpExcuterContactIml.get(url);
     }
 
 
@@ -36,6 +39,10 @@ import com.tb.tbretrofit.rx_retrofit.http_contact.HttpExcuterContactI;
     }
 
 
+    public <T> void post(String url, JsonBody json, HttpResponseListener<T> listener){
+
+
+    }
 
 
 }

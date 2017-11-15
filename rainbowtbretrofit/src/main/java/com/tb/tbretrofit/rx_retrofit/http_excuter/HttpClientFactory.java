@@ -52,13 +52,11 @@ public class HttpClientFactory {
         private Context context;
         private static List<Interceptor> mInterceptors;
 
-        private Builder() {
+        public Builder() {
             mInterceptors = new ArrayList<>();
         }
 
-        public static final HttpClientFactory.Builder create() {
-            return new HttpClientFactory.Builder();
-        }
+
 
         public HttpClientFactory.Builder addInterceptor(Interceptor interceptor) {
             mInterceptors.add(interceptor);

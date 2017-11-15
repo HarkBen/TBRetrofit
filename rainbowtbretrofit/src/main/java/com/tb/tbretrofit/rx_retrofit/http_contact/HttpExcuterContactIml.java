@@ -1,6 +1,8 @@
 package com.tb.tbretrofit.rx_retrofit.http_contact;
 
 import android.support.annotation.NonNull;
+import android.text.AndroidCharacter;
+import android.util.Log;
 
 import com.tb.tbretrofit.rx_retrofit.http_excuter.ApiService;
 import com.tb.tbretrofit.rx_retrofit.http_excuter.JsonBody;
@@ -10,16 +12,19 @@ import com.tb.tbretrofit.rx_retrofit.http_reception.HttpResponseListener;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
@@ -30,7 +35,7 @@ import rx.schedulers.Schedulers;
  * @创建时间：17/11/15 下午4:21
  * @最后更新时间：17/11/15 下午4:21
  */
-public class HttpExcuterContactIml implements HttpExcuterContactI {
+public class HttpExcuterContactIml implements HttpExcuterContactI{
 
 
     private ApiService apiService;
@@ -43,16 +48,21 @@ public class HttpExcuterContactIml implements HttpExcuterContactI {
 
     }
 
+    public static HttpExcuterContactIml create(HttpResponseListener responseListener){
+        return new HttpExcuterContactIml(responseListener);
+    }
 
-    private void subscribe (Observable<String> observable) {
+
+    private void subscribe (final Observable<Response<String>> observable) {
         if (null == observable) return;
 
-        Subscriber<String> subscriber = new Subscriber<String>() {
+        Subscriber<Response<String>> subscriber = new Subscriber<Response<String>>() {
             @Override
             public void onStart () {
                 responseListener.onStart();
             }
 
+            //遇到异常以后不会调用onComplete
             @Override
             public void onCompleted () {
                 responseListener.onFinish();
@@ -60,39 +70,33 @@ public class HttpExcuterContactIml implements HttpExcuterContactI {
 
             @Override
             public void onError (Throwable e) {
-
+                if(e instanceof IOException){
+                    responseListener.onFailure(HttpCode.CODE_INTENET_IS_NOT_AVALIABLE,"no network");
+                }
+                responseListener.onFinish();
 
 
             }
 
             @Override
-            public void onNext (String s) {
+            public void onNext (Response<String> response) {
 
-                responseListener.onSuccess(s);
+                responseListener.onSuccess(response.body());
+                Log.d("HttpExcuterContactIml","onNext:"+response.code());
             }
         };
 
         observable.subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .retry(new Func2<Integer, Throwable, Boolean>() {
-                    @Override
-                    public Boolean call (Integer integer, Throwable throwable) {
-
-                        return null;
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread());
-
-        observable.subscribe(subscriber);
-
-
+                .unsubscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
 
 
     }
 
     @Override
     public void get (String url) {
-        Observable<String> observable = apiService.get(url);
+        Observable<Response<String>> observable = apiService.get(url);
         subscribe(observable);
     }
 

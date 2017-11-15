@@ -5,6 +5,7 @@ import java.util.Map;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -29,8 +30,8 @@ public interface ApiService {
      * @param url
      * @return
      */
-
-    Observable<String> get(@Url String url);
+    @GET
+    Observable<Response<String>> get(@Url String url);
 
     /**
      * 普通模式
