@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-import com.tb.tbretrofit.httputils.tools.TbLog;
+import com.tb.tbretrofit.rx_retrofit.tools.RxHttpLog;
 import com.tb.tbretrofit.httputils.excute.TBCallBack;
 import com.tb.tbretrofit.httputils.excute.TBRequest;
 
@@ -106,11 +106,11 @@ public class HttpTestAct extends AppCompatActivity {
         @Override
         public void onResponse(final Call<String> tcall, Response<String> response) {
             int code = response.code();
-            TbLog.printD(TAG,"code=="+code);
+            RxHttpLog.printI(TAG,"code=="+code);
             String body = response.body();
-            TbLog.printD(TAG,"body=="+body);
+            RxHttpLog.printI(TAG,"body=="+body);
             String msg = response.message();
-            TbLog.printD(TAG,"msg=="+msg);
+            RxHttpLog.printI(TAG,"msg=="+msg);
 
             if(code == 302){
                 TBRequest.create()
@@ -118,9 +118,9 @@ public class HttpTestAct extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<String> call, Response<String> response) {
                                 int code = response.code();
-                                TbLog.printD(TAG,"code=="+code);
+                                RxHttpLog.printD(TAG,"code=="+code);
                                 String body = response.body();
-                                TbLog.printD(TAG,"body=="+body);
+                                RxHttpLog.printD(TAG,"body=="+body);
                                 tcall.clone().enqueue(callback);
                             }
 
@@ -142,7 +142,7 @@ public class HttpTestAct extends AppCompatActivity {
 
         @Override
         public void onFailure(Call<String> call, Throwable t) {
-                TbLog.printD(TAG,"onFailure"+t.getMessage());
+                RxHttpLog.printD(TAG,"onFailure"+t.getMessage());
         }
     };
     void request302(){

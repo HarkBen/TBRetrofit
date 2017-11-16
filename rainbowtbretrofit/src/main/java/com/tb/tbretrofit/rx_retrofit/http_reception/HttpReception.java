@@ -1,9 +1,16 @@
 package com.tb.tbretrofit.rx_retrofit.http_reception;
 
 
-import com.tb.tbretrofit.rx_retrofit.http_contact.HttpExcuterContactI;
-import com.tb.tbretrofit.rx_retrofit.http_contact.HttpExcuterContactIml;
+import com.tb.tbretrofit.rx_retrofit.http_contact.RxHttpExecuteI;
+import com.tb.tbretrofit.rx_retrofit.http_contact.RxHttpExecuteImpl;
 import com.tb.tbretrofit.rx_retrofit.http_excuter.JsonBody;
+
+import java.io.File;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * @描述： -
@@ -14,11 +21,10 @@ import com.tb.tbretrofit.rx_retrofit.http_excuter.JsonBody;
  */
  public class HttpReception {
 
-
+    private RxHttpExecuteI httpExcuterContactI;
 
     private HttpReception(){
-
-
+        httpExcuterContactI = new RxHttpExecuteImpl();
     }
 
     public static  HttpReception  create(){
@@ -26,23 +32,27 @@ import com.tb.tbretrofit.rx_retrofit.http_excuter.JsonBody;
     }
 
 
-    public <T> void  get(String url ,HttpResponseListener<T> listener){
-
-        HttpExcuterContactIml httpExcuterContactIml = new HttpExcuterContactIml(listener);
-        httpExcuterContactIml.get(url);
-    }
-
-
-    public <T> void post(String url,String json,HttpResponseListener<T> listener){
-
+    public  void  get(String url ,HttpResponseListener listener){
+        httpExcuterContactI.get(url,listener);
 
     }
 
 
-    public <T> void post(String url, JsonBody json, HttpResponseListener<T> listener){
-
-
+    public void get (String url, Map<String, Object> map, HttpResponseListener responseListener) {
+        httpExcuterContactI.get(url,map,responseListener);
     }
+
+
+    public void postJson (String url, JsonBody json,HttpResponseListener responseListener) {
+        httpExcuterContactI.postJson(url,json,responseListener);
+    }
+
+    public void postJson (String url, String json,HttpResponseListener responseListener) {
+        httpExcuterContactI.postJson(url,json,responseListener);
+    }
+
+
+
 
 
 }

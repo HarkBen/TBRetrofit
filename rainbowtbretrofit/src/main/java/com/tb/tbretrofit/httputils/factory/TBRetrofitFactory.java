@@ -3,7 +3,7 @@ package com.tb.tbretrofit.httputils.factory;
 
 import com.tb.tbretrofit.httputils.exception.RepeatBuildException;
 import com.tb.tbretrofit.httputils.service.TBRetrofitService;
-import com.tb.tbretrofit.httputils.tools.StringConverterFactory;
+import com.tb.tbretrofit.rx_retrofit.tools.StringConverterFactory;
 
 import java.util.ArrayList;
 import java.util.List;

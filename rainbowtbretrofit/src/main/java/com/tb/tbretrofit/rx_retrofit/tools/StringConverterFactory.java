@@ -1,4 +1,4 @@
-package com.tb.tbretrofit.httputils.tools;
+package com.tb.tbretrofit.rx_retrofit.tools;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -8,13 +8,13 @@ import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 
+
 /**
- * Create on 2016/9/27.
- * github  https://github.com/HarkBen
- * Description: String 转换器工厂
- * -----------
- * author Ben
- * Last_Update - 2016/9/27
+ * @描述： － 植入String 转换器
+ * -
+ * @作者：zhusw
+ * @创建时间：17/11/16 上午11:13
+ * @最后更新时间：17/11/16 上午11:13
  */
 public class StringConverterFactory extends Converter.Factory {
 

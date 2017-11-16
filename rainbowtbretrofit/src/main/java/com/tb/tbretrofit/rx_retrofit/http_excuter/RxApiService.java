@@ -23,7 +23,7 @@ import rx.Observable;
  * @创建时间：17/11/15 下午3:37
  * @最后更新时间：17/11/15 下午3:37
  */
-public interface ApiService {
+public interface RxApiService {
 
     /**
      * @RequestMapping（/users/{name}/{id}）
@@ -31,6 +31,7 @@ public interface ApiService {
      * @return
      */
     @GET
+    @Headers("Cache-Control: max-age=10")
     Observable<Response<String>> get(@Url String url);
 
     /**
@@ -41,7 +42,7 @@ public interface ApiService {
      * @return
      */
     @GET
-    Observable<String> get(@Url String url, @QueryMap Map<String, Object> map);
+    Observable<Response<String>> get(@Url String url, @QueryMap Map<String, Object> map);
 
 
     /**
@@ -53,7 +54,7 @@ public interface ApiService {
     @POST
     @FormUrlEncoded
     //自动设置 Content-Type:application/x-www-form-urlencoded
-    Observable<String> postForm(@Url String url, @FieldMap Map<String, Object> map);
+    Observable<Response<String>> postForm(@Url String url, @FieldMap Map<String, Object> map);
 
     /**
      * 直接提交json字符串
@@ -62,7 +63,7 @@ public interface ApiService {
      */
     @POST
     @Headers("Content-Type:application/json")
-    Observable<String> postJson(@Url String url, @Body String body);
+    Observable<Response<String>> postJson(@Url String url, @Body String body);
 
     /**
      * 直接提交entity
@@ -71,21 +72,21 @@ public interface ApiService {
      */
     @POST
     @Headers("Content-Type:application/json")
-    Observable<String> postJson(@Url String url, @Body JsonBody body);
+    Observable<Response<String>> postJson(@Url String url, @Body JsonBody body);
 
 
     /**
-     * 针对Content－type特别变更时使用
+     * 独立的参数类型，针对Content－type特别变更时使用
      * RequestBody 可以单独设置 content-type
      * @param url
      * @return
      */
     @POST
-    Observable<String> post(@Url String url, @Body RequestBody body);
+    Observable<Response<String>> postIndependent(@Url String url, @Body RequestBody body);
 
 
     @POST
-    Observable<String> postFormDataFiles(@Url String url, @Body MultipartBody body);
+    Observable<Response<String>> postFormDataFiles(@Url String url, @Body MultipartBody body);
 
 
 }

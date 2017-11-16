@@ -2,8 +2,7 @@ package com.tb.tbretrofit.rx_retrofit.http_excuter;
 
 
 import com.tb.tbretrofit.httputils.exception.RepeatBuildException;
-import com.tb.tbretrofit.httputils.service.TBRetrofitService;
-import com.tb.tbretrofit.httputils.tools.StringConverterFactory;
+import com.tb.tbretrofit.rx_retrofit.tools.StringConverterFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +12,6 @@ import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
-import rx.Subscriber;
 
 /**
  * @描述： -配置Retrofit的工程
@@ -46,8 +42,8 @@ public class RetrofitFactory {
         }
 
         /**
-         * 如果这里的 TBRetrofitFactory 需要单独使用，
-         * 不使用{@link ApiService}的接口定义 这里的baseUrl 则需要规范传入 http://www.xxx.com/
+         * 如果这里的 RetrofitFactory 需要单独使用，
+         * 不使用{@link RxApiService}的接口定义 这里的baseUrl 则需要规范传入 http://www.xxx.com/
          * 否则传入一个假的即可 http://xx.x.com/
          *
          * @return
@@ -81,7 +77,7 @@ public class RetrofitFactory {
             return new Builder();
         }
 
-        public RetrofitFactory builder() {
+        public RetrofitFactory init() {
             if (null == retrofitFactory) {
                 synchronized ((RetrofitFactory.class)) {
                     if (null == retrofitFactory) {
@@ -109,7 +105,7 @@ public class RetrofitFactory {
 
     public static RetrofitFactory getInstance() {
         if (null == retrofitFactory) {
-            throw new NullPointerException("uh~,you didn't build TBRetrofitFactory ");
+            throw new NullPointerException("uh~,you didn't init TBRetrofitFactory ");
         }
         return retrofitFactory;
     }

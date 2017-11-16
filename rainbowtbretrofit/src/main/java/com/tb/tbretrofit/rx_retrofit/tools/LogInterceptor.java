@@ -1,4 +1,4 @@
-package com.tb.tbretrofit.httputils.tools;
+package com.tb.tbretrofit.rx_retrofit.tools;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -91,7 +91,7 @@ public final class LogInterceptor implements Interceptor {
         /** A {@link Logger} defaults output appropriate for the current platform. */
         Logger DEFAULT = new Logger() {
             @Override public void log(String message) {
-                TbLog.printD(TAG,message);
+                RxHttpLog.printI(TAG,message);
             }
         };
     }

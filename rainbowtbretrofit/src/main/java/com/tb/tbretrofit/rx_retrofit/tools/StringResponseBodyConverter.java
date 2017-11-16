@@ -1,4 +1,4 @@
-package com.tb.tbretrofit.httputils.tools;
+package com.tb.tbretrofit.rx_retrofit.tools;
 
 import java.io.IOException;
 
@@ -6,12 +6,11 @@ import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
 /**
- * Create on 2016/9/27.
- * github  https://github.com/HarkBen
- * Description: response转换器- -！
- * -----------
- * author Ben
- * Last_Update - 2016/9/27
+ * @描述： － 响应 String 转换器
+ * -
+ * @作者：zhusw
+ * @创建时间：17/11/16 上午11:13
+ * @最后更新时间：17/11/16 上午11:13
  */
 public class StringResponseBodyConverter implements Converter<ResponseBody,String>{
     @Override

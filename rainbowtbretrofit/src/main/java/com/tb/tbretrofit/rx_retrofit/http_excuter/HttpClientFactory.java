@@ -7,14 +7,16 @@ import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.tb.tbretrofit.httputils.exception.RepeatBuildException;
-import com.tb.tbretrofit.httputils.tools.LogInterceptor;
-import com.tb.tbretrofit.httputils.tools.TbLog;
+import com.tb.tbretrofit.rx_retrofit.tools.CacheInterceptor;
+import com.tb.tbretrofit.rx_retrofit.tools.LogInterceptor;
+import com.tb.tbretrofit.rx_retrofit.tools.RxHttpLog;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 
@@ -49,8 +51,17 @@ public class HttpClientFactory {
          * -这玩意儿为啥一般不会出现
          */
         private int TIMEOUT_WRITE = 25;
-        private Context context;
+
+        private boolean syncCookie = false;
+        private Context context = null;
+
         private static List<Interceptor> mInterceptors;
+
+        private boolean autoCache = false;
+        private Cache cache = null;
+
+
+
 
         public Builder() {
             mInterceptors = new ArrayList<>();
@@ -60,6 +71,15 @@ public class HttpClientFactory {
 
         public HttpClientFactory.Builder addInterceptor(Interceptor interceptor) {
             mInterceptors.add(interceptor);
+            return this;
+        }
+
+        public HttpClientFactory.Builder autoCache(Context context){
+            this.autoCache = true;
+            //使用加密缓存区
+            File cacheFile = new File(context.getExternalCacheDir(),"cache");
+            int cacheSize  = 10*1024*1024;
+            cache = new Cache(cacheFile,cacheSize);
             return this;
         }
 
@@ -85,12 +105,18 @@ public class HttpClientFactory {
         }
 
         public HttpClientFactory.Builder syncCookie(Application context) {
-            this.context = context;
-            return this;
+            if(null == context){
+                syncCookie = false;
+                return null;
+            }else {
+                syncCookie = true;
+                this.context = context;
+                return this;
+            }
         }
 
         /**
-         * 这里使用的LogInterceptor 内部采用的也是日志类 TbLog
+         * 这里使用的LogInterceptor 内部采用的也是日志类 RxHttpLog
          * 对于 Tblog的 debug 模式的更改这里统一受约束
          * 保证所有Client统一性，不允许重复调用build()方法
          * @return
@@ -103,31 +129,38 @@ public class HttpClientFactory {
                         builder.connectTimeout(this.TIMEOUT_CONNECTION, TimeUnit.SECONDS);
                         builder.readTimeout(this.TIMEOUT_READ, TimeUnit.SECONDS);
                         builder.writeTimeout(this.TIMEOUT_WRITE, TimeUnit.SECONDS);
-                        if (null != context) {
+                        if ( syncCookie && null != context) {
                             ClearableCookieJar cookieJar =
                                     new PersistentCookieJar(new SetCookieCache(),
                                             new SharedPrefsCookiePersistor(context));
                             builder.cookieJar(cookieJar);
                         }
                         LogInterceptor logInterceptor = new LogInterceptor();
+                        //打印全部信息 包括报文和具体响应体，
                         logInterceptor.setLevel(LogInterceptor.Level.BODY);
                         builder.addInterceptor(logInterceptor);
+                        if(autoCache){
+                            //添加缓存支持
+                            builder.cache(cache);
+//                            builder.addInterceptor(new CacheInterceptor());
+
+                        }
 
                         for (Interceptor interceptor : mInterceptors) {
                             builder.addInterceptor(interceptor);
                         }
 
-                        TbLog.setDeBug(isDebug);
-                        return okHttpClient = builder.build();
+                        okHttpClient = builder.build();
+                        RxHttpLog.setDeBug(isDebug);
                     }
                 }
             }
-            throw  new RepeatBuildException();
+            return okHttpClient;
         }
     }
 
 
-    public static final OkHttpClient getInstance() {
+    public static final OkHttpClient getOkHttpClient() {
         if (null == okHttpClient) {
             throw new NullPointerException("uh~. When you initializing  TBOkHttpClientFactory you didn't build okHttpClient");
         } else {
