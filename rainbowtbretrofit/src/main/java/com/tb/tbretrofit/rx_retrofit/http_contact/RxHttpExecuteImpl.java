@@ -1,18 +1,13 @@
 package com.tb.tbretrofit.rx_retrofit.http_contact;
 
-import android.accounts.NetworkErrorException;
-
+import com.tb.tbretrofit.rx_retrofit.http_excuter.HttpSubscriber;
 import com.tb.tbretrofit.rx_retrofit.http_excuter.JsonBody;
 import com.tb.tbretrofit.rx_retrofit.http_excuter.RetrofitFactory;
 import com.tb.tbretrofit.rx_retrofit.http_excuter.RxApiService;
 import com.tb.tbretrofit.rx_retrofit.http_reception.HttpResponseListener;
 import com.tb.tbretrofit.rx_retrofit.tools.CacheModel;
-import com.tb.tbretrofit.rx_retrofit.tools.HttpCode;
-import com.tb.tbretrofit.rx_retrofit.tools.RxHttpLog;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.ConnectException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +20,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
-import rx.plugins.RxJavaErrorHandler;
 import rx.schedulers.Schedulers;
 
 /**
@@ -56,61 +50,7 @@ public class RxHttpExecuteImpl implements RxHttpExecuteI {
     private <T> void subscribe (final Observable<Response<String>> observable, final HttpResponseListener responseListener) {
         if (null == observable) return;
 
-        final Subscriber<Response<String>> subscriber = new Subscriber<Response<String>>() {
-
-
-            @Override
-            public void onStart () {
-                responseListener.onStart();
-            }
-
-            //遇到异常以后不会调用onComplete
-            @Override
-            public void onCompleted () {
-                RxHttpLog.printI(TAG,"onCompleted");
-                responseListener.onFinish();
-            }
-
-
-            @Override
-            public void onError (Throwable e) {
-                //判断网络状态 选择下发
-
-                RxHttpLog.printI(TAG,"onError:"+e.getMessage());
-                if (e instanceof IOException) {
-                    responseListener.onFailure(HttpCode.CODE_INTENET_IS_ABNORMAL, "IOException");
-
-                }else if(e instanceof ConnectException){
-                    responseListener.onFailure(HttpCode.CODE_INTENET_IS_ABNORMAL, "ConnectException");
-
-                }else if(e instanceof NetworkErrorException){
-                    responseListener.onFailure(HttpCode.CODE_INTENET_IS_ABNORMAL, "NetworkErrorException");
-
-                } else{
-                    responseListener.onFailure(HttpCode.CODE_UNKNOW, "unknow error");
-                }
-                responseListener.onFinish();
-
-
-            }
-
-            @Override
-            public void onNext (Response<String> response) {
-                RxHttpLog.printI(TAG,"onNext");
-                RxHttpLog.printI("RxHttpExecuteImpl", "code:" + response.code());
-                RxHttpLog.printI("RxHttpExecuteImpl", "finally Response:" + response.body());
-                RxHttpLog.printI("RxHttpExecuteImpl", "network Response:" + response.raw().networkResponse());
-                RxHttpLog.printI("RxHttpExecuteImpl", "cache Response:" + response.raw().cacheResponse());
-
-                responseListener.onResponse(response);
-
-
-
-
-            }
-
-
-        };
+        final Subscriber<Response<String>> subscriber = new HttpSubscriber(responseListener);
 
         //剩余补充，缓存函数，token重新获取函数
         observable.subscribeOn(Schedulers.io())//被观察者创建线程 事件产生的线程 变量X
@@ -129,7 +69,6 @@ public class RxHttpExecuteImpl implements RxHttpExecuteI {
                     }
                 })
                 .subscribe(subscriber);
-
 
     }
 

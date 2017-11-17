@@ -1,7 +1,7 @@
 package com.tb.tbretrofit.rx_retrofit.http_excuter;
 
 
-import com.tb.tbretrofit.httputils.exception.RepeatBuildException;
+import com.tb.tbretrofit.rx_retrofit.exception.RepeatBuildException;
 import com.tb.tbretrofit.rx_retrofit.tools.StringConverterFactory;
 
 import java.util.ArrayList;

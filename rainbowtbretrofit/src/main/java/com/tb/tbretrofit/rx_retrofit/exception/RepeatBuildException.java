@@ -1,4 +1,4 @@
-package com.tb.tbretrofit.httputils.exception;
+package com.tb.tbretrofit.rx_retrofit.exception;
 
 /**
  * Create on 2016/11/9.
@@ -10,8 +10,7 @@ package com.tb.tbretrofit.httputils.exception;
  */
 public class RepeatBuildException extends RuntimeException {
     public RepeatBuildException(){
-        this("Client was builded.Don't repeat build." +
-                "may be you should invoking getInstance() ");
+        this("Client was builded.In an application you can hold only one okHttpClient instance");
     }
     public RepeatBuildException(String errorMsg){
         super(errorMsg);

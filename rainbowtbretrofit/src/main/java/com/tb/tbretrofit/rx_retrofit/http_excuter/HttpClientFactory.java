@@ -7,7 +7,7 @@ import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.tb.tbretrofit.rx_retrofit.tools.CacheInterceptor;
+import com.tb.tbretrofit.rx_retrofit.exception.RepeatBuildException;
 import com.tb.tbretrofit.rx_retrofit.tools.LogInterceptor;
 import com.tb.tbretrofit.rx_retrofit.tools.RxHttpLog;
 
@@ -15,7 +15,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -150,10 +149,12 @@ public class HttpClientFactory {
 
                         okHttpClient = builder.build();
                         RxHttpLog.setDeBug(isDebug);
+                        return okHttpClient;
                     }
                 }
             }
-            return okHttpClient;
+
+          throw new RepeatBuildException();
         }
     }
 
