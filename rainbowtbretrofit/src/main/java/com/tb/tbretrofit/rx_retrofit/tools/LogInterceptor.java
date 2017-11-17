@@ -28,7 +28,7 @@ import okio.BufferedSource;
  */
 public final class LogInterceptor implements Interceptor {
     private static final Charset UTF8 = Charset.forName("UTF-8");
-    private static final String TAG = "OkHttp-Log";
+    private static final String TAG = "LogInterceptor-http";
     public enum Level {
         /** No logs. */
         NONE,

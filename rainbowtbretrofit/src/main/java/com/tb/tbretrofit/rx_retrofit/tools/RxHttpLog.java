@@ -18,15 +18,9 @@ public class RxHttpLog {
 		deBug = isDebug;
 	}
 
-	public static void printD(String TAG,String MSG){
-		if(deBug){
-		str = "RxHttpLog-->>"+TAG+"-->>"+MSG;
-		Log.d(TAG, str);
-		}
-	}
 	public static void printI(String TAG,String MSG){
 		if(deBug){
-			str = "RxHttpLog-->>"+TAG+"-->>"+MSG;
+			str = "RxHttpLog:--:"+TAG+":--:"+MSG;
 		Log.i(TAG, str);	
 		}
 	}

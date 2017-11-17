@@ -118,9 +118,9 @@ public class HttpTestAct extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<String> call, Response<String> response) {
                                 int code = response.code();
-                                RxHttpLog.printD(TAG,"code=="+code);
+                                RxHttpLog.printI(TAG,"code=="+code);
                                 String body = response.body();
-                                RxHttpLog.printD(TAG,"body=="+body);
+                                RxHttpLog.printI(TAG,"body=="+body);
                                 tcall.clone().enqueue(callback);
                             }
 
@@ -142,7 +142,7 @@ public class HttpTestAct extends AppCompatActivity {
 
         @Override
         public void onFailure(Call<String> call, Throwable t) {
-                RxHttpLog.printD(TAG,"onFailure"+t.getMessage());
+                RxHttpLog.printI(TAG,"onFailure"+t.getMessage());
         }
     };
     void request302(){

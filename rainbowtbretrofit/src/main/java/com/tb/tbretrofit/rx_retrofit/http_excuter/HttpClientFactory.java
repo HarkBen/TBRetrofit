@@ -142,8 +142,6 @@ public class HttpClientFactory {
                         if(autoCache){
                             //添加缓存支持
                             builder.cache(cache);
-//                            builder.addInterceptor(new CacheInterceptor());
-
                         }
 
                         for (Interceptor interceptor : mInterceptors) {

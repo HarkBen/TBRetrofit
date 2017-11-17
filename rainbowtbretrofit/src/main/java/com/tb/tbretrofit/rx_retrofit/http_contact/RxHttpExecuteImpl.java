@@ -1,34 +1,31 @@
 package com.tb.tbretrofit.rx_retrofit.http_contact;
 
-import android.util.Log;
+import android.accounts.NetworkErrorException;
 
-import com.tb.tbretrofit.rx_retrofit.http_excuter.HttpClientFactory;
-import com.tb.tbretrofit.rx_retrofit.http_excuter.RxApiService;
 import com.tb.tbretrofit.rx_retrofit.http_excuter.JsonBody;
 import com.tb.tbretrofit.rx_retrofit.http_excuter.RetrofitFactory;
+import com.tb.tbretrofit.rx_retrofit.http_excuter.RxApiService;
 import com.tb.tbretrofit.rx_retrofit.http_reception.HttpResponseListener;
+import com.tb.tbretrofit.rx_retrofit.tools.CacheModel;
+import com.tb.tbretrofit.rx_retrofit.tools.HttpCode;
 import com.tb.tbretrofit.rx_retrofit.tools.RxHttpLog;
-
 
 import java.io.File;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
-import rx.functions.Func1;
+import rx.plugins.RxJavaErrorHandler;
 import rx.schedulers.Schedulers;
 
 /**
@@ -39,25 +36,24 @@ import rx.schedulers.Schedulers;
  * @最后更新时间：17/11/15 下午4:21
  */
 public class RxHttpExecuteImpl implements RxHttpExecuteI {
+    private final static String TAG = "RxHttpExecuteImpl";
 
 
     private RxApiService apiService;
     private HttpTaskManagement httpTaskManagement;
 
-    public RxHttpExecuteImpl ( ) {
+    public RxHttpExecuteImpl () {
         apiService = RetrofitFactory.getInstance().createService(RxApiService.class);
         httpTaskManagement = RxHttpTaskManagement.getINSTANCE();
 
     }
 
-    public static RxHttpExecuteI create( ){
+    public static RxHttpExecuteI create () {
         return new RxHttpExecuteImpl();
-}
+    }
 
 
-
-
-    private <T>  void subscribe (final Observable<Response<String>> observable,final HttpResponseListener responseListener) {
+    private <T> void subscribe (final Observable<Response<String>> observable, final HttpResponseListener responseListener) {
         if (null == observable) return;
 
         final Subscriber<Response<String>> subscriber = new Subscriber<Response<String>>() {
@@ -71,13 +67,27 @@ public class RxHttpExecuteImpl implements RxHttpExecuteI {
             //遇到异常以后不会调用onComplete
             @Override
             public void onCompleted () {
+                RxHttpLog.printI(TAG,"onCompleted");
                 responseListener.onFinish();
             }
 
+
             @Override
             public void onError (Throwable e) {
-                if(e instanceof IOException){
-                    responseListener.onFailure(HttpCode.CODE_INTENET_IS_NOT_AVALIABLE,"no network");
+                //判断网络状态 选择下发
+
+                RxHttpLog.printI(TAG,"onError:"+e.getMessage());
+                if (e instanceof IOException) {
+                    responseListener.onFailure(HttpCode.CODE_INTENET_IS_ABNORMAL, "IOException");
+
+                }else if(e instanceof ConnectException){
+                    responseListener.onFailure(HttpCode.CODE_INTENET_IS_ABNORMAL, "ConnectException");
+
+                }else if(e instanceof NetworkErrorException){
+                    responseListener.onFailure(HttpCode.CODE_INTENET_IS_ABNORMAL, "NetworkErrorException");
+
+                } else{
+                    responseListener.onFailure(HttpCode.CODE_UNKNOW, "unknow error");
                 }
                 responseListener.onFinish();
 
@@ -86,11 +96,16 @@ public class RxHttpExecuteImpl implements RxHttpExecuteI {
 
             @Override
             public void onNext (Response<String> response) {
-                RxHttpLog.printI("RxHttpExecuteImpl","code:"+response.code());
-                RxHttpLog.printI("RxHttpExecuteImpl","finally Response:"+response.body());
-                RxHttpLog.printI("RxHttpExecuteImpl","network Response:"+response.raw().networkResponse());
-                RxHttpLog.printI("RxHttpExecuteImpl","cache Response:"+response.raw().cacheResponse());
+                RxHttpLog.printI(TAG,"onNext");
+                RxHttpLog.printI("RxHttpExecuteImpl", "code:" + response.code());
+                RxHttpLog.printI("RxHttpExecuteImpl", "finally Response:" + response.body());
+                RxHttpLog.printI("RxHttpExecuteImpl", "network Response:" + response.raw().networkResponse());
+                RxHttpLog.printI("RxHttpExecuteImpl", "cache Response:" + response.raw().cacheResponse());
+
                 responseListener.onResponse(response);
+
+
+
 
             }
 
@@ -104,7 +119,7 @@ public class RxHttpExecuteImpl implements RxHttpExecuteI {
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call () {
-                        httpTaskManagement.addSubscription(responseListener.getContext(),subscriber);
+                        httpTaskManagement.addSubscription(responseListener.getContext(), subscriber);
                     }
                 })
                 .doOnUnsubscribe(new Action0() {
@@ -116,58 +131,65 @@ public class RxHttpExecuteImpl implements RxHttpExecuteI {
                 .subscribe(subscriber);
 
 
+    }
 
+
+    private String getCacheControlValue(CacheModel cacheModel){
+        if(null == cacheModel){
+            cacheModel =  CacheModel.NORMAL;
+        }
+            return cacheModel.getValue();
+
+    }
+    @Override
+    public void get (String url, HttpResponseListener responseListener) {
+        subscribe(apiService.get(getCacheControlValue(responseListener.cacheModel()),url), responseListener);
     }
 
     @Override
-    public void get (String url,HttpResponseListener responseListener) {
-        subscribe(apiService.get(url),responseListener);
-    }
-
-    @Override
-    public void get (String url, String[] values,HttpResponseListener responseListener) {
+    public void get (String url, String[] values, HttpResponseListener responseListener) {
         if (null == values || values.length == 0) {
-            get(url,responseListener);
+            get(url, responseListener);
         } else {
             String va = "";
             for (String value : values) {
                 va += "/" + value;
             }
             url = url + va;
-            get(url,responseListener);
+            get(url, responseListener);
         }
 
     }
 
     @Override
-    public void get (String url, Map<String, Object> map,HttpResponseListener responseListener) {
-        subscribe(apiService.get(url,map),responseListener);
+    public void get (String url, Map<String, Object> map, HttpResponseListener responseListener) {
+        subscribe(apiService.get(url, map), responseListener);
     }
 
 
     @Override
-    public void postJson (String url, JsonBody json,HttpResponseListener responseListener) {
-        subscribe(apiService.postJson(url,json),responseListener);
+    public void postJson (String url, JsonBody json, HttpResponseListener responseListener) {
+        subscribe(apiService.postJson(url, json), responseListener);
     }
 
     @Override
-    public void postJson (String url, String json,HttpResponseListener responseListener) {
-        subscribe(apiService.postJson(url,json),responseListener);
+    public void postJson (String url, String json, HttpResponseListener responseListener) {
+        subscribe(apiService.postJson(url, json), responseListener);
     }
 
     @Override
-    public void postRequestBody (String url, RequestBody body,HttpResponseListener responseListener) {
-        subscribe(apiService.postIndependent(url,body),responseListener);
+    public void postRequestBody (String url, RequestBody body, HttpResponseListener responseListener) {
+        subscribe(apiService.postIndependent(url, body), responseListener);
     }
 
     @Override
-    public void postFormData (String url, Map<String, Object> map,HttpResponseListener responseListener) {
-        subscribe(apiService.postForm(url,map),responseListener);
+    public void postFormData (String url, Map<String, Object> map, HttpResponseListener responseListener) {
+        subscribe(apiService.postForm(url, map), responseListener);
 
     }
 
     @Override
-    public void postFormDataFiles (String url, Map<String, Object> map, List<File> files, MediaType contentType,HttpResponseListener responseListener) {
+    public void postFormDataFiles (String url, Map<String, Object> map, List<File> files, MediaType contentType, HttpResponseListener responseListener) {
         if (null == files) {
             throw new NullPointerException("files is null!");
         }
@@ -187,7 +209,7 @@ public class RxHttpExecuteImpl implements RxHttpExecuteI {
             }
         }
         MultipartBody multipartBody = builder.build();
-        subscribe(apiService.postFormDataFiles(url,multipartBody),responseListener);
+        subscribe(apiService.postFormDataFiles(url, multipartBody), responseListener);
     }
 
 }

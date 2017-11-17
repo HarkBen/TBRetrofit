@@ -3,6 +3,10 @@ package com.tb.tbretrofit.rx_retrofit.http_reception;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.tb.tbretrofit.rx_retrofit.tools.HttpCode;
+import com.tb.tbretrofit.rx_retrofit.tools.CacheModel;
+import com.tb.tbretrofit.rx_retrofit.tools.RxHttpLog;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.ParameterizedType;
@@ -35,7 +39,7 @@ public abstract class  HttpCallBack<T> implements HttpResponseListener{
             if (params != null && params.length > 0)
                 this.respType = params[0];
         }
-        //Class<T> entityClass = (Class) params[0]; //获取 class可以用此代码
+//        Class<T> entityClass = (Class) Classparams[0]; //获取 class可以用此代码
     }
 
 
@@ -47,12 +51,25 @@ public abstract class  HttpCallBack<T> implements HttpResponseListener{
 
     @Override
     public void onResponse (Response<String> response) {
-        T t = new Gson().fromJson(response.body(),respType);
-        onSuccess(t);
+        RxHttpLog.printI("HttpCallBack","onResponse");
+        if(null != response.body()){
+
+            try {
+                T t = new Gson().fromJson(response.body(),respType);
+                onSuccess(t);
+            }catch (JsonSyntaxException jse){
+                onFailure(HttpCode.CODE_DATA_FORMAT_FAILURE,jse.getMessage());
+            }
+        }else {
+            onFailure(HttpCode.CODE_DATA_FORMAT_FAILURE_NO_DATA,"response no data");
+        }
+
+
     }
 
     @Override
     public void onFailure (int errorCode, String message) {
+
 
     }
 
@@ -70,10 +87,13 @@ public abstract class  HttpCallBack<T> implements HttpResponseListener{
 
     public abstract void onSuccess(T t);
 
-
+    @Override
+    public CacheModel cacheModel () {
+        return CacheModel.NORMAL;
+    }
 
     /**
-     * 获取泛型class
+     * 获取泛型type
      *
      * @param genType
      * @return

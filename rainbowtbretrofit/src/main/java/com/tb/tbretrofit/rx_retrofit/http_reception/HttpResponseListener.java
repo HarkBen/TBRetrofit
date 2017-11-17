@@ -2,9 +2,7 @@ package com.tb.tbretrofit.rx_retrofit.http_reception;
 
 import android.content.Context;
 
-import java.lang.ref.WeakReference;
-import java.util.List;
-import java.util.WeakHashMap;
+import com.tb.tbretrofit.rx_retrofit.tools.CacheModel;
 
 import retrofit2.Response;
 
@@ -22,5 +20,7 @@ public interface  HttpResponseListener {
     void onFailure(int errorCode,String message);
     void onFinish();
     Context getContext();
+    CacheModel cacheModel();
+
 
 }

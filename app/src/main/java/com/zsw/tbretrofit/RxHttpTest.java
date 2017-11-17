@@ -1,23 +1,17 @@
 package com.zsw.tbretrofit;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.tb.tbretrofit.rx_retrofit.http_contact.RxHttpTaskManagement;
-import com.tb.tbretrofit.rx_retrofit.http_excuter.HttpClientFactory;
-import com.tb.tbretrofit.rx_retrofit.http_excuter.RetrofitFactory;
 import com.tb.tbretrofit.rx_retrofit.http_reception.HttpCallBack;
 import com.tb.tbretrofit.rx_retrofit.http_reception.HttpReception;
-
-
-
-
-import okhttp3.OkHttpClient;
+import com.tb.tbretrofit.rx_retrofit.tools.CacheModel;
 
 
 /**
@@ -27,64 +21,103 @@ import okhttp3.OkHttpClient;
  * @创建时间：17/11/15 下午6:01
  * @最后更新时间：17/11/15 下午6:01
  */
-public class RxHttpTest extends AppCompatActivity{
-    public static final String GITHUB_RESTFUL = "https://www.baidu.com/search/harkben";
+public class RxHttpTest extends AppCompatActivity implements View.OnClickListener {
+    public static final String GITHUB_RESTFUL = "https://api.github.com/users/Harkben";
+
+    EditText editText;
+    Button requestNormal, cancelRequest, requestForceCache, requestForceNetWork, requestNetWorkAndNoStroe;
+
     @Override
     protected void onCreate (@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_rxhttp_test);
-        initHttpSystem();
+        requestNormal = (Button) findViewById(R.id.art_requestNormal);
+        cancelRequest = (Button) findViewById(R.id.art_unSubscriber);
+        requestForceCache = (Button) findViewById(R.id.art_request_ForceCache);
+        requestForceNetWork = (Button) findViewById(R.id.art_request_requestForceNetWrok);
+        requestNetWorkAndNoStroe = (Button) findViewById(R.id.art_request_netWorkAndNoStore);
+        editText = (EditText) findViewById(R.id.art_log);
+        requestNetWorkAndNoStroe.setOnClickListener(this);
+        requestNormal.setOnClickListener(this);
+        requestForceCache.setOnClickListener(this);
+        requestForceNetWork.setOnClickListener(this);
+        cancelRequest.setOnClickListener(this);
 
+    }
 
-        Button request = (Button) findViewById(R.id.art_request);
+    private void getGitHubUser (CacheModel cacheModel) {
 
-        Button cancelRequest = (Button) findViewById(R.id.art_unSubscriber);
+        HttpReception.create().get(GITHUB_RESTFUL, new HttpCallBack<GithubEntity>(RxHttpTest.this) {
 
-
-        request.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick (View v) {
+            public void onSuccess (GithubEntity githubEntity) {
 
-                HttpReception.create().get(GITHUB_RESTFUL, new HttpCallBack<GithubEntity>(RxHttpTest.this) {
+                String msg = "githubEntity:" + githubEntity.getName()
+                        + "\n" + githubEntity.getBlog()
+                        + "\n" + githubEntity.getCompany()
+                        + "\n cacheModel:" + cacheModel().getValue()
+                        +"\n";
 
+                editText.setText(editText.getText().toString() + msg);
 
-                    @Override
-                    public void onSuccess (GithubEntity githubEntity) {
-
-                        printLog("githubEntity:"+githubEntity.getName());
-
-                    }
-
-
-                });
+                printLog("githubEntity:" + githubEntity.getName());
 
             }
+
+            @Override
+            public void onFailure (int errorCode, String message) {
+                printLog("onFailure  errorCod:" + errorCode + "  errorMsg:" + message);
+                editText.setText(editText.getText().toString() + "errorCod:" + errorCode + "__errorMsg" + message);
+
+            }
+
+            @Override
+            public void onFinish () {
+                printLog("onFinish");
+            }
+
+            @Override
+            public CacheModel cacheModel () {
+                return cacheModel;
+            }
+
+
         });
 
-        cancelRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick (View v) {
+    }
 
+    public void printLog (String msg) {
+        Log.d("RxHttpTest", msg);
+    }
+
+
+    @Override
+    public void onClick (View v) {
+        switch (v.getId()) {
+            case R.id.art_requestNormal:
+
+                getGitHubUser(CacheModel.NORMAL);
+
+                break;
+            case R.id.art_request_ForceCache:
+                getGitHubUser(CacheModel.FORCE_CACHE);
+                break;
+
+            case R.id.art_request_requestForceNetWrok:
+                getGitHubUser(CacheModel.FORCE_NETWORK);
+                break;
+
+            case R.id.art_request_netWorkAndNoStore:
+                getGitHubUser(CacheModel.FORCE_NETWORK_AND_NOSTRROE);
+                break;
+            case R.id.art_unSubscriber:
+                editText.setText("log:");
                 RxHttpTaskManagement.getINSTANCE().unSubscribe(RxHttpTest.this);
-            }
-        });
+                break;
 
+
+            default:
+                break;
+        }
     }
-
-    public void printLog(String msg){
-        Log.d("RxHttpTest",msg);
-    }
-
-
-    private void initHttpSystem(){
-        OkHttpClient client = new HttpClientFactory.Builder()
-                .setDebug(true)
-                .autoCache(this)
-                .build();
-        RetrofitFactory.Builder.create()
-                .setBaseUrl("http://www.aa.com")
-                .setOkHttpClient(client)
-                .init();
-    }
-
 }

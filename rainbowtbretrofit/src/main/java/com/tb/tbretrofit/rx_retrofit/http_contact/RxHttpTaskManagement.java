@@ -3,6 +3,8 @@ package com.tb.tbretrofit.rx_retrofit.http_contact;
 
 import android.util.Log;
 
+import com.tb.tbretrofit.rx_retrofit.tools.RxHttpLog;
+
 import java.util.HashMap;
 
 import java.util.Set;
@@ -42,18 +44,18 @@ public class RxHttpTaskManagement implements HttpTaskManagement<Object> {
     public void addSubscription (Object tag, Subscription subscription) {
 
         tasks.put(tag, subscription);
-        Log.d("RxHttpTaskmanagement","记录新订阅 key:"+tag.hashCode());
+        RxHttpLog.printI("RxHttpTaskmanagement","记录新订阅 key:"+tag.hashCode());
     }
 
 
     @Override
     public void unSubscribe (Object tag) {
         if (null == tasks || tasks.isEmpty()) return;
-        Log.d("RxHttpTaskmanagement","执行取消订阅 key:"+tag.hashCode());
+       RxHttpLog.printI("RxHttpTaskmanagement","执行取消订阅 key:"+tag.hashCode());
         Subscription subscription = tasks.get(tag);
         if(null != subscription && !subscription.isUnsubscribed()){
             subscription.unsubscribe();
-            Log.d("RxHttpTaskmanagement","取消了订阅 key:"+tag.hashCode());
+            RxHttpLog.printI("RxHttpTaskmanagement","取消了订阅 key:"+tag.hashCode());
             tasks.remove(tag);
 
         }
@@ -74,11 +76,12 @@ public class RxHttpTaskManagement implements HttpTaskManagement<Object> {
     @Override
     public void remove (Object tag) {
         if (!tasks.isEmpty()) tasks.remove(tag);
-        Log.d("RxHttpTaskmanagement","移除了订阅 key:"+tag.hashCode());
+        RxHttpLog.printI("RxHttpTaskmanagement","移除了订阅 key:"+tag.hashCode());
     }
 
     /**
-     * 抛弃之前已添加的所有任务接收者
+     * 抛弃之前已添加的所有任务接收者,但不负责回收
+     * －潜意识里觉得需要这么一个方法～～～
      */
     @Override
     public void abandonAll () {

@@ -4,13 +4,48 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/art_request"
-        android:text="get GitHub UserInfo"
-        android:textAllCaps="false"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/art_requestNormal"
+            android:text="Normal"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <Button
+            android:id="@+id/art_request_netWorkAndNoStore"
+            android:text="NetWorkAndNoStore"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/art_request_ForceCache"
+            android:text="ForceCache"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <Button
+            android:id="@+id/art_request_requestForceNetWrok"
+            android:text="ForceNetWrok"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/art_unSubscriber"
         android:text="unSubscriber"
@@ -18,4 +53,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
+    <EditText
+        android:id="@+id/art_log"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:background="@color/colorAccent"
+        android:textColor="#fff"
+        android:gravity="left|top"
+        android:text="log:"
+        android:editable="false"
+        android:layout_weight="1"/>
+
 </LinearLayout>
