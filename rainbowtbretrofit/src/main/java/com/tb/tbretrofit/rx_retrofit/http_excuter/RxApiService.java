@@ -33,7 +33,7 @@ public interface RxApiService {
      * @return
      */
     @GET
-    Observable<Response<String>> get(@Header("Cache-Control") String cacheConfig, @Url String url);
+    Observable<Response<String>> get(@Header("Cache-Control") String cacheControl, @Url String url);
 
 
     /**

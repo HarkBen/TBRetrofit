@@ -1,6 +1,6 @@
 package com.tb.tbretrofit.rx_retrofit.http_excuter;
 
-import com.tb.tbretrofit.rx_retrofit.http_reception.HttpResponseListener;
+import com.tb.tbretrofit.rx_retrofit.http_receiver.HttpResponseListener;
 import com.tb.tbretrofit.rx_retrofit.tools.HttpCode;
 import com.tb.tbretrofit.rx_retrofit.tools.RxHttpLog;
 
@@ -13,13 +13,13 @@ import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscriber;
 
 /**
- * @描述： -
+ * @描述： -处理网络访问异常及缓存异常
  * -
  * @作者：zhusw
  * @创建时间：17/11/17 下午6:02
  * @最后更新时间：17/11/17 下午6:02
  */
-public class HttpSubscriber extends Subscriber<Response<String>> {
+final public class HttpSubscriber extends Subscriber<Response<String>> {
     final private static String TAG = "HttpSubscriber";
 
     private HttpResponseListener responseListener;
@@ -51,12 +51,12 @@ public class HttpSubscriber extends Subscriber<Response<String>> {
         //此处可拦截到的网络异常有：服务器
         RxHttpLog.printI(TAG, "onError:" + e.getMessage());
         if (e instanceof HttpException) {
-            //SSL 验证成功 有正常的 响应返回，服务器无包装时 协议码为 401 404 等。。。
+            //SSL 验证成功 有正常的 响应返回，服务器无包装时 协议码为标准 401 404 等。。。
             HttpException httpException = (HttpException) e;
             responseListener.onFailure(httpException.code(), httpException.message());
 
         } else if (e instanceof SSLException) {
-            //无法链接目标主机
+            //无法链接目标主机-本地网络无法访问外部服务器地址-服务器地址无法连接
             responseListener.onFailure(HttpCode.CODE_INTENET_IS_ABNORMAL, "网络请求异常");
 
         } else if (e instanceof IOException) {
@@ -68,7 +68,7 @@ public class HttpSubscriber extends Subscriber<Response<String>> {
 
     /*
     *这里比较怪：
-    * 1.选择只读取缓存区时
+    * 1.选择只读取缓存区时 如果没有缓存可读，会走onError 和onNext 但不会走 onCompleted
     *
     *
     */

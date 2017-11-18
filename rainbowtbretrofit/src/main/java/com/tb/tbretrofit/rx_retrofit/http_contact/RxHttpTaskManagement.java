@@ -1,7 +1,6 @@
 package com.tb.tbretrofit.rx_retrofit.http_contact;
 
 
-import android.util.Log;
 
 import com.tb.tbretrofit.rx_retrofit.tools.RxHttpLog;
 
@@ -42,7 +41,6 @@ public class RxHttpTaskManagement implements HttpTaskManagement<Object> {
 
     @Override
     public void addSubscription (Object tag, Subscription subscription) {
-
         tasks.put(tag, subscription);
         RxHttpLog.printI("RxHttpTaskmanagement","记录新订阅 key:"+tag.hashCode());
     }

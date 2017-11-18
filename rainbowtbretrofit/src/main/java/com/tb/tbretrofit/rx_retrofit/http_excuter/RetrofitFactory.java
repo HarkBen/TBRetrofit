@@ -105,7 +105,7 @@ public class RetrofitFactory {
 
     public static RetrofitFactory getInstance() {
         if (null == retrofitFactory) {
-            throw new NullPointerException("uh~,you didn't init TBRetrofitFactory ");
+            throw new NullPointerException("uh~,you didn't init RetrofitFactory ");
         }
         return retrofitFactory;
     }

@@ -1,10 +1,7 @@
 package com.tb.tbretrofit.rx_retrofit.http_contact;
 
-import com.google.gson.annotations.JsonAdapter;
 import com.tb.tbretrofit.rx_retrofit.http_excuter.JsonBody;
-import com.tb.tbretrofit.rx_retrofit.http_reception.HttpResponseListener;
-
-import org.json.JSONObject;
+import com.tb.tbretrofit.rx_retrofit.http_receiver.HttpResponseListener;
 
 import java.io.File;
 import java.util.List;
@@ -12,7 +9,6 @@ import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import retrofit2.Callback;
 
 /**
  * @描述： -对外接受参数规范定义
@@ -21,7 +17,7 @@ import retrofit2.Callback;
  * @创建时间：17/11/15 下午3:56
  * @最后更新时间：17/11/15 下午3:56
  */
-public interface RxHttpExecuteI {
+public interface HttpContactI {
 
 
     void get(String url,HttpResponseListener responseListener);

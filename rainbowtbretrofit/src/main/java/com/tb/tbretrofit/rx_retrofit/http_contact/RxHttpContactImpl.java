@@ -4,7 +4,7 @@ import com.tb.tbretrofit.rx_retrofit.http_excuter.HttpSubscriber;
 import com.tb.tbretrofit.rx_retrofit.http_excuter.JsonBody;
 import com.tb.tbretrofit.rx_retrofit.http_excuter.RetrofitFactory;
 import com.tb.tbretrofit.rx_retrofit.http_excuter.RxApiService;
-import com.tb.tbretrofit.rx_retrofit.http_reception.HttpResponseListener;
+import com.tb.tbretrofit.rx_retrofit.http_receiver.HttpResponseListener;
 import com.tb.tbretrofit.rx_retrofit.tools.CacheModel;
 
 import java.io.File;
@@ -23,36 +23,27 @@ import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 
 /**
- * @描述： -具体实现请求交接和返回值传递
+ * @描述： -负责选择执行的具体任务及获取任务返回
  * -
  * @作者：zhusw
  * @创建时间：17/11/15 下午4:21
  * @最后更新时间：17/11/15 下午4:21
  */
-public class RxHttpExecuteImpl implements RxHttpExecuteI {
-    private final static String TAG = "RxHttpExecuteImpl";
+final public class RxHttpContactImpl implements HttpContactI {
+    private final static String TAG = "RxHttpContactImpl";
+    final private RxApiService apiService;
+    final private HttpTaskManagement httpTaskManagement;
 
-
-    private RxApiService apiService;
-    private HttpTaskManagement httpTaskManagement;
-
-    public RxHttpExecuteImpl () {
+    public RxHttpContactImpl(HttpTaskManagement httpTaskManagement) {
         apiService = RetrofitFactory.getInstance().createService(RxApiService.class);
-        httpTaskManagement = RxHttpTaskManagement.getINSTANCE();
-
+        this.httpTaskManagement = httpTaskManagement;
     }
 
-    public static RxHttpExecuteI create () {
-        return new RxHttpExecuteImpl();
-    }
-
-
-    private <T> void subscribe (final Observable<Response<String>> observable, final HttpResponseListener responseListener) {
+    private  void subscribe (final Observable<Response<String>> observable, final HttpResponseListener responseListener) {
         if (null == observable) return;
 
         final Subscriber<Response<String>> subscriber = new HttpSubscriber(responseListener);
 
-        //剩余补充，缓存函数，token重新获取函数
         observable.subscribeOn(Schedulers.io())//被观察者创建线程 事件产生的线程 变量X
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())//观察者接受回调线程 事件接受线程 应变量Y
@@ -80,6 +71,9 @@ public class RxHttpExecuteImpl implements RxHttpExecuteI {
             return cacheModel.getValue();
 
     }
+
+
+
     @Override
     public void get (String url, HttpResponseListener responseListener) {
         subscribe(apiService.get(getCacheControlValue(responseListener.cacheModel()),url), responseListener);

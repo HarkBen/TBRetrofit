@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.tb.tbretrofit.rx_retrofit.http_contact.RxHttpContactImpl;
 import com.tb.tbretrofit.rx_retrofit.http_contact.RxHttpTaskManagement;
-import com.tb.tbretrofit.rx_retrofit.http_reception.HttpCallBack;
-import com.tb.tbretrofit.rx_retrofit.http_reception.HttpReception;
+import com.tb.tbretrofit.rx_retrofit.http_receiver.HttpCallBack;
 import com.tb.tbretrofit.rx_retrofit.tools.CacheModel;
 
 
@@ -47,8 +47,8 @@ public class RxHttpTest extends AppCompatActivity implements View.OnClickListene
 
     private void getGitHubUser (CacheModel cacheModel) {
 
-        HttpReception.create().get(GITHUB_RESTFUL, new HttpCallBack<GithubEntity>(RxHttpTest.this) {
-
+       new  RxHttpContactImpl(RxHttpTaskManagement.getINSTANCE())
+                .get(GITHUB_RESTFUL, new HttpCallBack<GithubEntity>(RxHttpTest.this) {
             @Override
             public void onSuccess (GithubEntity githubEntity) {
 
@@ -67,7 +67,7 @@ public class RxHttpTest extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onFailure (int errorCode, String message) {
                 printLog("onFailure  errorCod:" + errorCode + "  errorMsg:" + message);
-                editText.setText(editText.getText().toString() + "errorCod:" + errorCode + "__errorMsg" + message);
+                editText.setText(editText.getText().toString() + "errorCod:" + errorCode + "__errorMsg" + message+"\n");
 
             }
 

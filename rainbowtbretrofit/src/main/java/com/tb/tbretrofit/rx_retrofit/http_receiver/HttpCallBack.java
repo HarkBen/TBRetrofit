@@ -1,4 +1,4 @@
-package com.tb.tbretrofit.rx_retrofit.http_reception;
+package com.tb.tbretrofit.rx_retrofit.http_receiver;
 
 import android.content.Context;
 
