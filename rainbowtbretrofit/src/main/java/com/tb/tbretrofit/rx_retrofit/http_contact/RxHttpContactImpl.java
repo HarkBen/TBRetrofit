@@ -1,6 +1,6 @@
 package com.tb.tbretrofit.rx_retrofit.http_contact;
 
-import com.tb.tbretrofit.rx_retrofit.http_excuter.HttpSubscriber;
+import com.tb.tbretrofit.rx_retrofit.http_excuter.ResponseHandler;
 import com.tb.tbretrofit.rx_retrofit.http_excuter.JsonBody;
 import com.tb.tbretrofit.rx_retrofit.http_excuter.RetrofitFactory;
 import com.tb.tbretrofit.rx_retrofit.http_excuter.RxApiService;
@@ -42,7 +42,7 @@ final public class RxHttpContactImpl implements HttpContactI {
     private  void subscribe (final Observable<Response<String>> observable, final HttpResponseListener responseListener) {
         if (null == observable) return;
 
-        final Subscriber<Response<String>> subscriber = new HttpSubscriber(responseListener);
+        final Subscriber<Response<String>> subscriber = new ResponseHandler(responseListener);
 
         observable.subscribeOn(Schedulers.io())//被观察者创建线程 事件产生的线程 变量X
                 .unsubscribeOn(Schedulers.io())

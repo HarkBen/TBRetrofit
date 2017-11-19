@@ -61,7 +61,7 @@ public abstract class  HttpCallBack<T> implements HttpResponseListener{
                 onFailure(HttpCode.CODE_DATA_FORMAT_FAILURE,jse.getMessage());
             }
         }else {
-            onFailure(HttpCode.CODE_DATA_FORMAT_FAILURE_NO_DATA,"response no data");
+            onFailure(HttpCode.CODE_DATA_FORMAT_FAILURE_NO_DATA,"没有返回数据");
         }
 
 

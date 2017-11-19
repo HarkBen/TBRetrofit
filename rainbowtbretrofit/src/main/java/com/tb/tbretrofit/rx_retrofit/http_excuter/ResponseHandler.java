@@ -2,6 +2,7 @@ package com.tb.tbretrofit.rx_retrofit.http_excuter;
 
 import com.tb.tbretrofit.rx_retrofit.http_receiver.HttpResponseListener;
 import com.tb.tbretrofit.rx_retrofit.tools.HttpCode;
+import com.tb.tbretrofit.rx_retrofit.tools.NetworkStatusUtils;
 import com.tb.tbretrofit.rx_retrofit.tools.RxHttpLog;
 
 import java.io.IOException;
@@ -19,12 +20,12 @@ import rx.Subscriber;
  * @创建时间：17/11/17 下午6:02
  * @最后更新时间：17/11/17 下午6:02
  */
-final public class HttpSubscriber extends Subscriber<Response<String>> {
-    final private static String TAG = "HttpSubscriber";
+final public class ResponseHandler extends Subscriber<Response<String>> {
+    final private static String TAG = "ResponseHandler";
 
     private HttpResponseListener responseListener;
 
-    public HttpSubscriber (HttpResponseListener responseListener) {
+    public ResponseHandler(HttpResponseListener responseListener) {
         this.responseListener = responseListener;
     }
 
@@ -33,8 +34,8 @@ final public class HttpSubscriber extends Subscriber<Response<String>> {
         super.onStart();
         responseListener.onStart();
         //判断网络 如果是必须使用用网络请求 直接取消 请求
-        if (false) {
-            responseListener.onFailure(HttpCode.CODE_NO_INTERNET, "无网络");
+        if (!NetworkStatusUtils.networkIsConnected(responseListener.getContext())) {
+            responseListener.onFailure(HttpCode.CODE_NO_INTERNET, "网络不可用");
             unsubscribe();
             onCompleted();
         }
@@ -57,11 +58,11 @@ final public class HttpSubscriber extends Subscriber<Response<String>> {
 
         } else if (e instanceof SSLException) {
             //无法链接目标主机-本地网络无法访问外部服务器地址-服务器地址无法连接
-            responseListener.onFailure(HttpCode.CODE_INTENET_IS_ABNORMAL, "网络请求异常");
+            responseListener.onFailure(HttpCode.CODE_INTENET_IS_ABNORMAL, "无法链接目标主机-本地网络无法访问外部服务器地址-服务器地址无法连接");
 
         } else if (e instanceof IOException) {
             //有网但请求失败包含：网络未授权访问外部地址，只读缓存时缓存区无缓存，等。。。
-            responseListener.onFailure(HttpCode.CODE_UNKNOW, "网络请求异常");
+            responseListener.onFailure(HttpCode.CODE_UNKNOW, "有网但请求失败包含：网络未授权访问外部地址，只读缓存时缓存区无缓存，等。。。");
         }
         responseListener.onFinish();
     }
