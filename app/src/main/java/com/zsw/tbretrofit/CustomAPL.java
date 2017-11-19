@@ -2,13 +2,8 @@ package com.zsw.tbretrofit;
 
 import android.app.Application;
 
-import com.tb.tbretrofit.httputils.excute.TBRequestExecute;
-import com.tb.tbretrofit.httputils.factory.TBOkHttpClientFactory;
-
-import com.tb.tbretrofit.httputils.factory.TBRetrofitFactory;
-import com.tb.tbretrofit.httputils.factory.TBTranslateFactory;
-import com.tb.tbretrofit.rx_retrofit.http_excuter.HttpClientFactory;
-import com.tb.tbretrofit.rx_retrofit.http_excuter.RetrofitFactory;
+import com.tb.rx_retrofit.http_excuter.HttpClientFactory;
+import com.tb.rx_retrofit.http_excuter.RetrofitFactory;
 
 import okhttp3.OkHttpClient;
 

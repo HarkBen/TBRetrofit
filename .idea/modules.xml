@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TBRetrofit.iml" filepath="$PROJECT_DIR$/TBRetrofit.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rainbowtbretrofit/rainbowtbretrofit.iml" filepath="$PROJECT_DIR$/rainbowtbretrofit/rainbowtbretrofit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tb_rxretrofit/tb_rxretrofit.iml" filepath="$PROJECT_DIR$/tb_rxretrofit/tb_rxretrofit.iml" />
     </modules>
   </component>
 </project>
