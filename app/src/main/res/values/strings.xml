@@ -10,4 +10,17 @@
                 .build(); \n
         TBRequestFactory \n
         .build(TBRetrofitFactory.getInstance("http://www.xx.com/"));</string>
+
+
+
+    <string name="dataJson">{"title":"上汽","typeId":"2","tagIds":"4","pageInfo":{"pageNumber":1,"pageSize":5}}</string>
+    <string name="loginJson">
+{
+    "loginName": "sunkui@visionet.com.cn",
+    "password": "123456",
+    "client_flag": "android",
+    "model": "Samsung Galaxy Note3 N9009",
+    "locale": "zh",
+    "clientMobileVersion": "1.0"
+}</string>
 </resources>

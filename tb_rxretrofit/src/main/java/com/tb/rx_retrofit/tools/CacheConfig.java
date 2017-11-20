@@ -40,8 +40,6 @@ public class CacheConfig {
      */
     public static String forceNetWorkAndNoStore () {
         return new CacheControl.Builder()
-                .maxAge(10, TimeUnit.SECONDS)
-                .maxStale(20, TimeUnit.SECONDS)
                 .noCache()
                 .noStore()
                 .build().toString();
@@ -62,15 +60,18 @@ public class CacheConfig {
     /**
      * 完全交给Cache－Control：value
      * 由value来决定 重新请求还是使用缓存
-     * 另外：value 区分 request  与 response
-     * 并且由request 为准 response为辅
+     * 另外：Cache－Control 区分 client  与 server,
+     * 也就是服务器对应的 expires 有效时间   client max-age
+     * 并且由 client 为准 server 为辅
+     *
+     * max-age client自主决定缓存有效期 超过有效期才请求网络
+     * 但是如果服务器依然返回304 则将继续使用缓存
      *
      * @return
      */
     public static String normal () {
         return new CacheControl.Builder()
-                .maxAge(10, TimeUnit.SECONDS)//
-                .maxStale(20, TimeUnit.SECONDS)
+                .maxAge(10, TimeUnit.SECONDS)
                 .build().toString();
     }
 

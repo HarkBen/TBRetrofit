@@ -42,7 +42,7 @@ public interface RxApiService {
      * @return
      */
     @GET
-    Observable<Response<String>> get(@Url String url, @QueryMap Map<String, Object> map);
+    Observable<Response<String>> get(@Header("Cache-Control") String cacheControl,@Url String url, @QueryMap Map<String, Object> map);
 
 
     /**
@@ -54,16 +54,7 @@ public interface RxApiService {
     @POST
     @FormUrlEncoded
     //自动设置 Content-Type:application/x-www-form-urlencoded
-    Observable<Response<String>> postForm(@Url String url, @FieldMap Map<String, Object> map);
-
-    /**
-     * 直接提交json字符串
-     * @param url
-     * @return
-     */
-    @POST
-    @Headers("Content-Type:application/json")
-    Observable<Response<String>> postJson(@Url String url, @Body String body);
+    Observable<Response<String>> postForm(@Header("Cache-Control") String cacheControl,@Url String url, @FieldMap Map<String, Object> map);
 
     /**
      * 直接提交entity
@@ -71,9 +62,17 @@ public interface RxApiService {
      * @return
      */
     @POST
-    @Headers("Content-Type:application/json")
+    @Headers("Content-Type:application/json;")
     Observable<Response<String>> postJson(@Url String url, @Body JsonBody body);
 
+    /**
+     * 直接提交entity
+     * @param url
+     * @return
+     */
+    @POST
+    @Headers("Content-Type:application/json;")
+    Observable<Response<String>> postJson(@Header("Cache-Control") String cacheControl,@Url String url, @Body String body);
 
     /**
      * 独立的参数类型，针对Content－type特别变更时使用
@@ -82,11 +81,11 @@ public interface RxApiService {
      * @return
      */
     @POST
-    Observable<Response<String>> postIndependent(@Url String url, @Body RequestBody body);
+    Observable<Response<String>> postIndependent(@Header("Cache-Control") String cacheControl,@Url String url, @Body RequestBody body);
 
 
     @POST
-    Observable<Response<String>> postFormDataFiles(@Url String url, @Body MultipartBody body);
+    Observable<Response<String>> postFormDataFiles(@Header("Cache-Control") String cacheControl,@Url String url, @Body MultipartBody body);
 
 
 }

@@ -28,7 +28,7 @@ public interface HttpContactI {
 
     void postJson(String url, JsonBody json,HttpResponseListener responseListener);
 
-    void postJson(String url,  String json,HttpResponseListener responseListener);
+    void postJson(String url, String json,HttpResponseListener responseListener);
 
     void postRequestBody(String url, RequestBody body,HttpResponseListener responseListener);
 

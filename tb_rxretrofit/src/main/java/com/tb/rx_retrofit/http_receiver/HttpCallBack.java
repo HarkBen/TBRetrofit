@@ -51,18 +51,19 @@ public abstract class  HttpCallBack<T> implements HttpResponseListener{
 
     @Override
     public void onResponse (Response<String> response) {
-        RxHttpLog.printI("HttpCallBack","onResponse");
-        if(null != response.body()){
+        RxHttpLog.printI("HttpCallBack", "onResponse");
+        if (null != response.body()) {
 
             try {
-                T t = new Gson().fromJson(response.body(),respType);
+                T t = new Gson().fromJson(response.body(), respType);
                 onSuccess(t);
-            }catch (JsonSyntaxException jse){
-                onFailure(HttpCode.CODE_DATA_FORMAT_FAILURE,jse.getMessage());
+            } catch (JsonSyntaxException jse) {
+                onFailure(HttpCode.CODE_DATA_FORMAT_FAILURE, jse.getMessage());
             }
-        }else {
-            onFailure(HttpCode.CODE_DATA_FORMAT_FAILURE_NO_DATA,"没有返回数据");
+        } else {
+            onFailure(HttpCode.CODE_DATA_FORMAT_FAILURE_NO_DATA, "没有返回数据");
         }
+
 
 
     }

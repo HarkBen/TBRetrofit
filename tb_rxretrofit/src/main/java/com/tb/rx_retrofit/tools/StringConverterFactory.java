@@ -1,5 +1,9 @@
 package com.tb.rx_retrofit.tools;
 
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
@@ -11,6 +15,7 @@ import retrofit2.Retrofit;
 
 /**
  * @描述： － 植入String 转换器
+ * 参照GsonConverter 源码 来实现的 入参json，返回String
  * -
  * @作者：zhusw
  * @创建时间：17/11/16 上午11:13
@@ -18,15 +23,13 @@ import retrofit2.Retrofit;
  */
 public class StringConverterFactory extends Converter.Factory {
 
-    //抄源码的感觉 简直爽到不行----
-    //我们照着GsonConverterFactory 写自己的String转换器
-    //他需要2个转换器类 responseBodyConverter  和 requestBodyConverter
 
+    private Gson gson;
     public static StringConverterFactory create(){
         return new StringConverterFactory();
     }
     private  StringConverterFactory(){
-
+        gson = new Gson();
     }
 
     @Override
@@ -37,6 +40,7 @@ public class StringConverterFactory extends Converter.Factory {
 
     @Override
     public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
-        return new StringRequestBodyConverter();
+            TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
+            return new GsonRequestBodyConverter<>(gson, adapter);
     }
 }

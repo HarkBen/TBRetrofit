@@ -2,10 +2,12 @@ package com.zsw.tbretrofit;
 
 import android.app.Application;
 
+import com.google.gson.Gson;
 import com.tb.rx_retrofit.http_excuter.HttpClientFactory;
 import com.tb.rx_retrofit.http_excuter.RetrofitFactory;
 
 import okhttp3.OkHttpClient;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Create on 2016/10/11.

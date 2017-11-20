@@ -1,6 +1,12 @@
 package com.tb.rx_retrofit.tools;
 
+import android.util.JsonReader;
+
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.concurrent.TimeUnit;
@@ -176,7 +182,7 @@ public final class LogInterceptor implements Interceptor {
                     charset = contentType.charset(UTF8);
                 }
 
-                logger.log("");
+                logger.log("请求 参数");
                 logger.log(buffer.readString(charset));
 
                 logger.log("--> END " + request.method()
@@ -225,7 +231,7 @@ public final class LogInterceptor implements Interceptor {
                 }
 
                 if (contentLength != 0) {
-                    logger.log("");
+                    logger.log("响应 数据");
                     logger.log(buffer.clone().readString(charset));
                 }
 

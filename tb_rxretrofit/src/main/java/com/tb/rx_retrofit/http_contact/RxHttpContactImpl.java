@@ -1,5 +1,6 @@
 package com.tb.rx_retrofit.http_contact;
 
+import com.tb.rx_retrofit.fuction.RetryWhenTimeout;
 import com.tb.rx_retrofit.http_excuter.ResponseHandler;
 import com.tb.rx_retrofit.http_excuter.JsonBody;
 import com.tb.rx_retrofit.http_excuter.RetrofitFactory;
@@ -20,6 +21,9 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 /**
@@ -47,6 +51,25 @@ final public class RxHttpContactImpl implements HttpContactI {
         observable.subscribeOn(Schedulers.io())//被观察者创建线程 事件产生的线程 变量X
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())//观察者接受回调线程 事件接受线程 应变量Y
+//                .concatMap(new Func1<Response<String>, Observable<Response<String>>>() {
+//                    @Override
+//                    public Observable<Response<String>> call (Response<String> response) {
+//                        if(response.raw().code() == 302){
+//                         return apiService.get("","")
+//                                 .concatMap(new Func1<Response<String>, Observable<? extends Response<String>>>() {
+//
+//                             @Override
+//                             public Observable<? extends Response<String>> call (Response<String> response) {
+//
+//                                 return observable;
+//                             }
+//                         });
+//
+//                        }
+//                        return null;
+//                    }
+//                })
+                .retryWhen(new RetryWhenTimeout())
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call () {
@@ -64,7 +87,7 @@ final public class RxHttpContactImpl implements HttpContactI {
     }
 
 
-    private String getCacheControlValue(CacheModel cacheModel){
+    private String checkCacheModel(CacheModel cacheModel){
         if(null == cacheModel){
             cacheModel =  CacheModel.NORMAL;
         }
@@ -76,7 +99,7 @@ final public class RxHttpContactImpl implements HttpContactI {
 
     @Override
     public void get (String url, HttpResponseListener responseListener) {
-        subscribe(apiService.get(getCacheControlValue(responseListener.cacheModel()),url), responseListener);
+        subscribe(apiService.get(checkCacheModel(responseListener.cacheModel()),url), responseListener);
     }
 
     @Override
@@ -96,7 +119,7 @@ final public class RxHttpContactImpl implements HttpContactI {
 
     @Override
     public void get (String url, Map<String, Object> map, HttpResponseListener responseListener) {
-        subscribe(apiService.get(url, map), responseListener);
+        subscribe(apiService.get(checkCacheModel(responseListener.cacheModel()),url, map), responseListener);
     }
 
 
@@ -107,17 +130,18 @@ final public class RxHttpContactImpl implements HttpContactI {
 
     @Override
     public void postJson (String url, String json, HttpResponseListener responseListener) {
-        subscribe(apiService.postJson(url, json), responseListener);
+        subscribe(apiService.postJson(checkCacheModel(responseListener.cacheModel()),url, json), responseListener);
     }
+
 
     @Override
     public void postRequestBody (String url, RequestBody body, HttpResponseListener responseListener) {
-        subscribe(apiService.postIndependent(url, body), responseListener);
+        subscribe(apiService.postIndependent(checkCacheModel(responseListener.cacheModel()),url, body), responseListener);
     }
 
     @Override
     public void postFormData (String url, Map<String, Object> map, HttpResponseListener responseListener) {
-        subscribe(apiService.postForm(url, map), responseListener);
+        subscribe(apiService.postForm(checkCacheModel(responseListener.cacheModel()),url, map), responseListener);
 
     }
 
@@ -142,7 +166,7 @@ final public class RxHttpContactImpl implements HttpContactI {
             }
         }
         MultipartBody multipartBody = builder.build();
-        subscribe(apiService.postFormDataFiles(url, multipartBody), responseListener);
+        subscribe(apiService.postFormDataFiles(checkCacheModel(responseListener.cacheModel()),url, multipartBody), responseListener);
     }
 
 }

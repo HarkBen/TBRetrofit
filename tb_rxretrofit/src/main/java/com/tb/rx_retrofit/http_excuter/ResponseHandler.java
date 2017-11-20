@@ -33,7 +33,7 @@ final public class ResponseHandler extends Subscriber<Response<String>> {
     public void onStart () {
         super.onStart();
         responseListener.onStart();
-        //判断网络 如果是必须使用用网络请求 直接取消 请求
+        //拦截无网络可用
         if (!NetworkStatusUtils.networkIsConnected(responseListener.getContext())) {
             responseListener.onFailure(HttpCode.CODE_NO_INTERNET, "网络不可用");
             unsubscribe();
@@ -47,6 +47,10 @@ final public class ResponseHandler extends Subscriber<Response<String>> {
         responseListener.onFinish();
     }
 
+    /**
+     * 协议层 读存数据发生错误才会走这里
+     * @param e
+     */
     @Override
     public void onError (Throwable e) {
         //此处可拦截到的网络异常有：服务器
