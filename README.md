@@ -1,7 +1,7 @@
 ![pppm.jpg](picture/pppm.png)
 
-# TBRetrofit 1.4
-#### Top：基于square 的 Retrofit 底层框架封装的 http库
+# TBRetrofit 2.0
+#### Tips:2.0版本已完成。完整替换为Rxjava＋retrofit模式，正在补充文档
 
 **V 1.4 更新：**
      <p> 1. 支持添加多个拦截器 </p> 
