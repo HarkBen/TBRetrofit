@@ -1,4 +1,6 @@
-package com.tb.rx_retrofit.tools;
+package com.tb.rx_retrofit.tools.cache;
+
+import com.tb.rx_retrofit.tools.cache.CacheConfig;
 
 /**
  * @描述： -

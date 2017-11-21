@@ -1,4 +1,4 @@
-package com.tb.rx_retrofit.exception;
+package com.tb.rx_retrofit.tools.exception;
 
 /**
  * Create on 2016/11/9.

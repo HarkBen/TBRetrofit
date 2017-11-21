@@ -1,12 +1,11 @@
-package com.tb.rx_retrofit.http_contact;
+package com.tb.rx_retrofit.http_presenter;
 
-import com.tb.rx_retrofit.fuction.RetryWhenTimeout;
-import com.tb.rx_retrofit.http_excuter.ResponseHandler;
-import com.tb.rx_retrofit.http_excuter.JsonBody;
+import com.tb.rx_retrofit.tools.fuction.RetryWhenTimeout;
 import com.tb.rx_retrofit.http_excuter.RetrofitFactory;
 import com.tb.rx_retrofit.http_excuter.RxApiService;
 import com.tb.rx_retrofit.http_receiver.HttpResponseListener;
-import com.tb.rx_retrofit.tools.CacheModel;
+import com.tb.rx_retrofit.tools.cache.CacheModel;
+import com.tb.rx_retrofit.tools.task_management.HttpTaskManagement;
 
 import java.io.File;
 import java.util.Iterator;
@@ -21,9 +20,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 /**
@@ -33,12 +29,12 @@ import rx.schedulers.Schedulers;
  * @创建时间：17/11/15 下午4:21
  * @最后更新时间：17/11/15 下午4:21
  */
-final public class RxHttpContactImpl implements HttpContactI {
-    private final static String TAG = "RxHttpContactImpl";
+final public class RxHttpPresenterImpl implements HttpPresenterI {
+    private final static String TAG = "RxHttpPresenterImpl";
     final private RxApiService apiService;
     final private HttpTaskManagement httpTaskManagement;
 
-    public RxHttpContactImpl(HttpTaskManagement httpTaskManagement) {
+    public RxHttpPresenterImpl (HttpTaskManagement httpTaskManagement) {
         apiService = RetrofitFactory.getInstance().createService(RxApiService.class);
         this.httpTaskManagement = httpTaskManagement;
     }
@@ -51,24 +47,6 @@ final public class RxHttpContactImpl implements HttpContactI {
         observable.subscribeOn(Schedulers.io())//被观察者创建线程 事件产生的线程 变量X
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())//观察者接受回调线程 事件接受线程 应变量Y
-//                .concatMap(new Func1<Response<String>, Observable<Response<String>>>() {
-//                    @Override
-//                    public Observable<Response<String>> call (Response<String> response) {
-//                        if(response.raw().code() == 302){
-//                         return apiService.get("","")
-//                                 .concatMap(new Func1<Response<String>, Observable<? extends Response<String>>>() {
-//
-//                             @Override
-//                             public Observable<? extends Response<String>> call (Response<String> response) {
-//
-//                                 return observable;
-//                             }
-//                         });
-//
-//                        }
-//                        return null;
-//                    }
-//                })
                 .retryWhen(new RetryWhenTimeout())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -122,14 +100,8 @@ final public class RxHttpContactImpl implements HttpContactI {
         subscribe(apiService.get(checkCacheModel(responseListener.cacheModel()),url, map), responseListener);
     }
 
-
     @Override
     public void postJson (String url, JsonBody json, HttpResponseListener responseListener) {
-        subscribe(apiService.postJson(url, json), responseListener);
-    }
-
-    @Override
-    public void postJson (String url, String json, HttpResponseListener responseListener) {
         subscribe(apiService.postJson(checkCacheModel(responseListener.cacheModel()),url, json), responseListener);
     }
 

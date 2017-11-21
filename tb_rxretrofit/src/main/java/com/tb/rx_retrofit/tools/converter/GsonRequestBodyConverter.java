@@ -1,4 +1,4 @@
-package com.tb.rx_retrofit.tools;
+package com.tb.rx_retrofit.tools.converter;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -22,14 +22,14 @@ import retrofit2.Converter;
  * @创建时间：17/11/16 上午11:13
  * @最后更新时间：17/11/16 上午11:13
  */
-public class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
-    private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
-    private static final Charset UTF_8 = Charset.forName("utf-8");
+final class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
+    private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
+    private static final Charset UTF_8 = Charset.forName("UTF-8");
 
     private final Gson gson;
     private final TypeAdapter<T> adapter;
 
-    GsonRequestBodyConverter (Gson gson, TypeAdapter<T> adapter) {
+    GsonRequestBodyConverter(Gson gson, TypeAdapter<T> adapter) {
         this.gson = gson;
         this.adapter = adapter;
     }
@@ -40,11 +40,6 @@ public class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
         JsonWriter jsonWriter = gson.newJsonWriter(writer);
         adapter.write(jsonWriter, value);
         jsonWriter.close();
-        RxHttpLog.printI("GsonRequestBodyConverter","buffer size="+buffer.size());
-        RxHttpLog.printI("GsonRequestBodyConverter",buffer.readUtf8());
-        RequestBody requestBody = RequestBody.create(MEDIA_TYPE,buffer.readString(UTF_8));
-        return requestBody;//RequestBody.create(MEDIA_TYPE, buffer.readByteString());
+        return RequestBody.create(MEDIA_TYPE, buffer.readByteString());
     }
-
-
 }

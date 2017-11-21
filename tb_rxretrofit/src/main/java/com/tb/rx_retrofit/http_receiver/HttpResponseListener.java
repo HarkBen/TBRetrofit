@@ -2,7 +2,7 @@ package com.tb.rx_retrofit.http_receiver;
 
 import android.content.Context;
 
-import com.tb.rx_retrofit.tools.CacheModel;
+import com.tb.rx_retrofit.tools.cache.CacheModel;
 
 import retrofit2.Response;
 

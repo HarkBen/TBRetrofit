@@ -5,7 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.tb.rx_retrofit.tools.HttpCode;
-import com.tb.rx_retrofit.tools.CacheModel;
+import com.tb.rx_retrofit.tools.cache.CacheModel;
 import com.tb.rx_retrofit.tools.RxHttpLog;
 
 import java.lang.ref.WeakReference;

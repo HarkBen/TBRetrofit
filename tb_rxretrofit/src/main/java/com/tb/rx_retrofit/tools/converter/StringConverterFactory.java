@@ -1,4 +1,4 @@
-package com.tb.rx_retrofit.tools;
+package com.tb.rx_retrofit.tools.converter;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -13,6 +13,7 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 
 
+
 /**
  * @描述： － 植入String 转换器
  * 参照GsonConverter 源码 来实现的 入参json，返回String
@@ -24,23 +25,26 @@ import retrofit2.Retrofit;
 public class StringConverterFactory extends Converter.Factory {
 
 
-    private Gson gson;
-    public static StringConverterFactory create(){
+    public static StringConverterFactory create () {
         return new StringConverterFactory();
     }
-    private  StringConverterFactory(){
+
+    private final Gson gson;
+    private StringConverterFactory () {
         gson = new Gson();
     }
 
     @Override
-    public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations,
-                                                            Retrofit retrofit) {
+    public Converter<ResponseBody, ?> responseBodyConverter (Type type, Annotation[] annotations,
+                                                             Retrofit retrofit) {
         return new StringResponseBodyConverter();
     }
 
     @Override
-    public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
-            TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
-            return new GsonRequestBodyConverter<>(gson, adapter);
+    public Converter<?, RequestBody> requestBodyConverter(Type type,
+                                                          Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
+        TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
+        return new GsonRequestBodyConverter<>(gson, adapter);
     }
 }
+

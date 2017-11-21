@@ -1,6 +1,6 @@
-package com.zsw.tbretrofit;
+package com.zsw.tbretrofit.databox;
 
-import com.tb.rx_retrofit.http_excuter.JsonBody;
+import com.tb.rx_retrofit.http_presenter.JsonBody;
 
 /**
  * @描述： -
@@ -9,7 +9,7 @@ import com.tb.rx_retrofit.http_excuter.JsonBody;
  * @创建时间：17/11/20 下午4:12
  * @最后更新时间：17/11/20 下午4:12
  */
-public class LoginParameter implements JsonBody{
+public class SiginParameter implements JsonBody{
 
     /**
      * loginName : sunkui@visionet.com.cn

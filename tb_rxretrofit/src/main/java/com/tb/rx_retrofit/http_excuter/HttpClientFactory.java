@@ -7,8 +7,8 @@ import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.tb.rx_retrofit.exception.RepeatBuildException;
-import com.tb.rx_retrofit.tools.LogInterceptor;
+import com.tb.rx_retrofit.tools.exception.RepeatBuildException;
+import com.tb.rx_retrofit.tools.fuction.LogInterceptor;
 import com.tb.rx_retrofit.tools.RxHttpLog;
 
 import java.io.File;

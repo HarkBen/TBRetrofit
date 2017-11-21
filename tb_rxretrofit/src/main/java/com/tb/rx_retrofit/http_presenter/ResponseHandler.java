@@ -1,4 +1,4 @@
-package com.tb.rx_retrofit.http_excuter;
+package com.tb.rx_retrofit.http_presenter;
 
 import com.tb.rx_retrofit.http_receiver.HttpResponseListener;
 import com.tb.rx_retrofit.tools.HttpCode;
@@ -81,7 +81,7 @@ final public class ResponseHandler extends Subscriber<Response<String>> {
     public void onNext (Response<String> response) {
         RxHttpLog.printI(TAG, "onNext");
         RxHttpLog.printI(TAG, "code:" + response.code());
-        RxHttpLog.printI(TAG, "finally Response:" + response.body());
+        RxHttpLog.printI(TAG, "finally Response:" + response.body().toString().length());
         RxHttpLog.printI(TAG, "network Response:" + response.raw().networkResponse());
         RxHttpLog.printI(TAG, "cache Response:" + response.raw().cacheResponse());
         responseListener.onResponse(response);

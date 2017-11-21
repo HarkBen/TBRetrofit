@@ -1,12 +1,8 @@
-package com.tb.rx_retrofit.tools;
+package com.tb.rx_retrofit.tools.fuction;
 
-import android.util.JsonReader;
+import com.tb.rx_retrofit.tools.RxHttpLog;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.concurrent.TimeUnit;

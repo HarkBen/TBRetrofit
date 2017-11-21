@@ -1,4 +1,4 @@
-package com.zsw.tbretrofit;
+package com.zsw.tbretrofit.databox;
 
 /**
  * @描述： -

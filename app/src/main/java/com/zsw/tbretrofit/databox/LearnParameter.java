@@ -1,6 +1,6 @@
-package com.zsw.tbretrofit;
+package com.zsw.tbretrofit.databox;
 
-import com.tb.rx_retrofit.http_excuter.JsonBody;
+import com.tb.rx_retrofit.http_presenter.JsonBody;
 
 /**
  * @描述： -

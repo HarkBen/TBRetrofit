@@ -1,20 +1,17 @@
 package com.tb.rx_retrofit.http_excuter;
 
 
-import com.tb.rx_retrofit.exception.RepeatBuildException;
-import com.tb.rx_retrofit.tools.StringConverterFactory;
-import com.tb.rx_retrofit.tools.StringResponseBodyConverter;
+import com.tb.rx_retrofit.tools.exception.RepeatBuildException;
+import com.tb.rx_retrofit.tools.converter.StringConverterFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * @描述： -配置Retrofit的工程

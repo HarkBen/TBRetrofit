@@ -8,11 +8,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.tb.rx_retrofit.http_contact.RxHttpContactImpl;
-import com.tb.rx_retrofit.http_contact.RxHttpTaskManagement;
-import com.tb.rx_retrofit.http_excuter.JsonBody;
+import com.tb.rx_retrofit.http_presenter.RxHttpPresenterImpl;
+import com.tb.rx_retrofit.tools.task_management.RxHttpTaskManagement;
 import com.tb.rx_retrofit.http_receiver.HttpCallBack;
-import com.tb.rx_retrofit.tools.CacheModel;
+import com.tb.rx_retrofit.http_receiver.HttpUtils;
+import com.tb.rx_retrofit.tools.cache.CacheModel;
+import com.zsw.tbretrofit.databox.GithubEntity;
+import com.zsw.tbretrofit.databox.PostDataUtils;
+import com.zsw.tbretrofit.databox.SiginResponseBean;
+import com.zsw.tbretrofit.http.API;
+
+import retrofit2.Response;
 
 
 /**
@@ -35,8 +41,7 @@ public class RxHttpTest extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.act_rxhttp_test);
-        loginJson = getString(R.string.loginJson);
-        dataJson = getString(R.string.dataJson);
+
         requestNormal = (Button) findViewById(R.id.art_requestNormal);
         cancelRequest = (Button) findViewById(R.id.art_unSubscriber);
         requestForceCache = (Button) findViewById(R.id.art_request_ForceCache);
@@ -57,7 +62,7 @@ public class RxHttpTest extends AppCompatActivity implements View.OnClickListene
 
     private void getGitHubUser (CacheModel cacheModel) {
 
-        new RxHttpContactImpl(RxHttpTaskManagement.getINSTANCE())
+        new RxHttpPresenterImpl(RxHttpTaskManagement.getINSTANCE())
                 .get(GITHUB_RESTFUL, new HttpCallBack<GithubEntity>(RxHttpTest.this) {
                     @Override
                     public void onSuccess (GithubEntity githubEntity) {
@@ -137,49 +142,46 @@ public class RxHttpTest extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public static final String DJ_IP = "http://180.166.66.226:43230/baoshi";
-    String loginUrl = DJ_IP + "/mobilelogin";
-    String dataUrl = DJ_IP+"/materials/queryMaterials";
 
-
-    String loginJson ;
-    String dataJson;
 
     private void loginOnDJ () {
-        LoginParameter loginParameter = new LoginParameter();
-        loginParameter.setClient_flag("android");
-        loginParameter.setClientMobileVersion("1.0");
-        loginParameter.setLocale("zh");
-        loginParameter.setLoginName("sunkui@visionet.com.cn");
-        loginParameter.setPassword("123456");
-        loginParameter.setModel("Samsung Galaxy Note3 N9009");
-        new RxHttpContactImpl(RxHttpTaskManagement.getINSTANCE())
-                .postJson(loginUrl, loginParameter, new HttpCallBack<String>(RxHttpTest.this) {
+        HttpUtils.createContact()
+                .postJson(API.loginUrl, PostDataUtils.getSiginParameter(), new HttpCallBack<SiginResponseBean>(RxHttpTest.this) {
 
                     @Override
-                    public void onSuccess (String s) {
+                    public void onSuccess (SiginResponseBean s) {
+
+                        editText.setText(editText.getText().toString() + "\n"+s.toString());
 
                     }
 
                     @Override
+                    public void onFailure (int errorCode, String message) {
+                        super.onFailure(errorCode, message);
+                        editText.setText("onFailure:"+errorCode +"  "+message);
+                    }
+
+                    @Override
                     public CacheModel cacheModel () {
-                        return CacheModel.FORCE_NETWORK_AND_NOSTRROE;
+                        return CacheModel.NORMAL;
                     }
                 });
     }
 
     private void getDJData () {
-        LearnParameter learnParameter = new LearnParameter();
-        learnParameter.setPageInfo(new LearnParameter.PageInfoBean(1,5));
-        new RxHttpContactImpl(RxHttpTaskManagement.getINSTANCE())
-                .postJson(dataUrl, learnParameter, new HttpCallBack<String>(RxHttpTest.this) {
+        new RxHttpPresenterImpl(RxHttpTaskManagement.getINSTANCE())
+                .postJson(API.dataUrl, PostDataUtils.getLearnParameter(), new HttpCallBack<Object>(RxHttpTest.this) {
 
                     @Override
-                    public void onSuccess (String s) {
+                    public void onSuccess (Object s) {
 
                     }
 
-
+                    @Override
+                    public void onResponse (Response<String> response) {
+                        super.onResponse(response);
+                        editText.setText(editText.getText().toString() + "\n"+response.body().toString());
+                    }
                 });
     }
 

@@ -1,6 +1,5 @@
-package com.tb.rx_retrofit.http_contact;
+package com.tb.rx_retrofit.http_presenter;
 
-import com.tb.rx_retrofit.http_excuter.JsonBody;
 import com.tb.rx_retrofit.http_receiver.HttpResponseListener;
 
 import java.io.File;
@@ -17,7 +16,7 @@ import okhttp3.RequestBody;
  * @创建时间：17/11/15 下午3:56
  * @最后更新时间：17/11/15 下午3:56
  */
-public interface HttpContactI {
+public interface HttpPresenterI {
 
 
     void get(String url,HttpResponseListener responseListener);
@@ -27,8 +26,6 @@ public interface HttpContactI {
     void get(String url, Map<String, Object> map,HttpResponseListener responseListener);
 
     void postJson(String url, JsonBody json,HttpResponseListener responseListener);
-
-    void postJson(String url, String json,HttpResponseListener responseListener);
 
     void postRequestBody(String url, RequestBody body,HttpResponseListener responseListener);
 
