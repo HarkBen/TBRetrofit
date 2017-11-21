@@ -1,20 +1,20 @@
 ![pppm.jpg](picture/pppm.png)
 
 # TBRetrofit 2.0
-#### Tips:2.0版本已完成。完整替换为Rxjava＋retrofit模式，正在补充文档
+#### Tips:2.0版本已完成。完整替换为Rxjava＋retrofit模式。
 
-**V 1.4 更新：**
-     <p> 1. 支持添加多个拦截器 </p> 
-     <p> 2. 支持添加多个转换器 </p> 
-     <p> 3. 简化Service拓展 </p> 
-     ***
-**V 1.0 ：**
-    <p> 1. 对各个初始化Factory进行封装，统一配置，更换日志打印拦截器，提供debug模式 </p>
-    <p> 2. 对Retrofit 接口定义进行了常用模式归纳，具体请求模式限定和抽象 </p>
-    <p> 3. 对请求参数统一格式化(GET , JSON,两种 FormData),保持入口参数设置方式相同，方便使用 </p>
-    <p> 4. 对CallBack返回统一使用String泛型，替换GsonConveter 为StringConverter </p>
-    <p> 5. 除了CallBack<String> 固定其他Factory类都可以解耦单独立使用 </p>
-    ***
+**V 2.0
+    1.对外保持 通用API 及回调,get,postJson,formData,files
+    2.缓存插拔式使用－支持永久缓存 并自动初始化首次数据
+    3.cookie session token 过期自动刷新策略
+    4.超时自动重试
+    5.自动于Context绑定，无需担心释放
+    6.集中处理所望网络异常 并分类下发
+
+
+
+
+
 
   
 ## Gradle
@@ -33,7 +33,7 @@
 
 ```gradle
         dependencies {
-	          compile 'com.github.HarkBen:TBRetrofit:1.4'
+
 	    }   
 ```   
 

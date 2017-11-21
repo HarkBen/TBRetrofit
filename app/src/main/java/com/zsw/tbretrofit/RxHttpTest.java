@@ -143,22 +143,22 @@ public class RxHttpTest extends AppCompatActivity implements View.OnClickListene
     }
 
 
-
     private void loginOnDJ () {
         HttpUtils.createContact()
                 .postJson(API.loginUrl, PostDataUtils.getSiginParameter(), new HttpCallBack<SiginResponseBean>(RxHttpTest.this) {
 
+
                     @Override
                     public void onSuccess (SiginResponseBean s) {
 
-                        editText.setText(editText.getText().toString() + "\n"+s.toString());
+                        editText.setText(editText.getText().toString() + "\n" + s.toString());
 
                     }
 
                     @Override
                     public void onFailure (int errorCode, String message) {
                         super.onFailure(errorCode, message);
-                        editText.setText("onFailure:"+errorCode +"  "+message);
+                        editText.setText("onFailure:" + errorCode + "  " + message);
                     }
 
                     @Override
@@ -173,14 +173,42 @@ public class RxHttpTest extends AppCompatActivity implements View.OnClickListene
                 .postJson(API.dataUrl, PostDataUtils.getLearnParameter(), new HttpCallBack<Object>(RxHttpTest.this) {
 
                     @Override
-                    public void onSuccess (Object s) {
+                    public void onStart () {
+                        super.onStart();
+                        printLog("onStart");
+                    }
 
+                    @Override
+                    public void onFinish () {
+                        super.onFinish();
+                        printLog("onFinish");
+                    }
+
+
+
+                    @Override
+                    public void onFailure (int errorCode, String message) {
+                        super.onFailure(errorCode, message);
+                        editText.setText("onFailure:" + errorCode + "  " + message);
+                        printLog("onFailure：code="+errorCode + "message="+message);
+                    }
+
+                    @Override
+                    public void onSuccess (Object s) {
+                        printLog("onSuccess");
                     }
 
                     @Override
                     public void onResponse (Response<String> response) {
+                        printLog("onResponse");
                         super.onResponse(response);
-                        editText.setText(editText.getText().toString() + "\n"+response.body().toString());
+                        editText.setText(editText.getText().toString() + "\n" + response.body().toString());
+
+                    }
+
+                    @Override
+                    public CacheModel cacheModel () {
+                        return CacheModel.NORMAL;
                     }
                 });
     }

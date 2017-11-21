@@ -1,6 +1,7 @@
 package com.tb.rx_retrofit.http_receiver;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -12,6 +13,7 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Response;
 
 /**
@@ -22,6 +24,7 @@ import retrofit2.Response;
  * @最后更新时间：17/11/16 上午11:13
  */
 public abstract class  HttpCallBack<T> implements HttpResponseListener{
+    final private static String TAG= "HttpCallBack";
 
     public Type respType;
 
@@ -49,11 +52,8 @@ public abstract class  HttpCallBack<T> implements HttpResponseListener{
 
     }
 
-    @Override
-    public void onResponse (Response<String> response) {
-        RxHttpLog.printI("HttpCallBack", "onResponse");
+    private void formatData(Response<String> response){
         if (null != response.body()) {
-
             try {
                 T t = new Gson().fromJson(response.body(), respType);
                 onSuccess(t);
@@ -61,8 +61,36 @@ public abstract class  HttpCallBack<T> implements HttpResponseListener{
                 onFailure(HttpCode.CODE_DATA_FORMAT_FAILURE, jse.getMessage());
             }
         } else {
-            onFailure(HttpCode.CODE_DATA_FORMAT_FAILURE_NO_DATA, "没有返回数据");
+            onFailure(HttpCode.CODE_DATA_FORMAT_FAILURE_NO_DATA, "没有数据返回");
         }
+    }
+
+    /**
+     * 处理数据分发
+     * @param response
+     */
+    @Override
+    public void onResponse (Response<String> response) {
+        RxHttpLog.printI(TAG, "onResponse");
+        switch (response.code()){
+            case 200:
+                formatData(response);
+                break;
+            case 404:
+            case 400:
+            case 405:
+            case 500:
+            default:
+                onFailure(HttpCode.CODE_REQUEST_ERROR, "网络请求错误："+response.code());
+                break;
+        }
+
+
+
+
+
+
+
 
 
 

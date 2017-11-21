@@ -18,16 +18,21 @@ public class HttpCode {
     //请求超时
     final public static int CODE_TIME_OUT = -103;
 
-    //服务器不可用
-    final public static int CODE_SERVICE_IS_NOT_AVAILABLE = -104;
+    //访问的目标主机不存在
+    final public static int CODE_UNKNOW_HOST = -104;
 
+    //有网但请求失败包含：网络未授权访问外部地址，只读缓存时缓存区无缓存，等。。。
+    final public static int CODE_RESPONSE_ERROR = -105;
 
     //本地使用gson 解析数据 错误
-    final public static int CODE_DATA_FORMAT_FAILURE = -105;
+    final public static int CODE_DATA_FORMAT_FAILURE = -106;
 
-    //请求成功但 无数据
-    final public static int CODE_DATA_FORMAT_FAILURE_NO_DATA = -106;
+    //请求成功但 没有数据返回
+    final public static int CODE_DATA_FORMAT_FAILURE_NO_DATA = -107;
 
-    //未知错误
-    final public static int CODE_UNKNOW = -107;
+    //未知网络错误
+    final public static int CODE_UNKNOW = -108;
+
+    //网络请求错误 状态码 网络错误 40x 50x
+    final public static int CODE_REQUEST_ERROR = -109;
 }

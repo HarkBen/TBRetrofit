@@ -12,13 +12,20 @@ import retrofit2.Converter;
  * @创建时间：17/11/16 上午11:13
  * @最后更新时间：17/11/16 上午11:13
  */
-public class StringResponseBodyConverter implements Converter<ResponseBody,String>{
+public class StringResponseBodyConverter implements Converter<ResponseBody, String> {
     @Override
-    public String convert(ResponseBody value) throws IOException {
+    public String convert (ResponseBody value) throws IOException {
+
+        if (null == value || value.contentLength() < 1) {
+            return "";
+        }
         try {
             return value.string();
         } finally {
             value.close();
+
         }
+
+
     }
 }

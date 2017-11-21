@@ -19,9 +19,12 @@ public class CacheConfig {
      - noStore();//不使用缓存，也不存储缓存
      - onlyIfCached();//只使用缓存
      - noTransform();//禁止转码
-     - maxAge(10, TimeUnit.MILLISECONDS);//设置超时时间为10ms。
-     - maxStale(10, TimeUnit.SECONDS);//超时之外的超时时间为10s
+     - maxAge(10, TimeUnit.MILLISECONDS);//超过 maxAge 将走网络。
+     - maxStale(10, TimeUnit.SECONDS);//超过 maxStale 缓存将不可用
+       但依然由 maxAge决定是否走网络，所以 精良让maxAge<maxStale 避免返回 空结果
+
      - minFresh(10, TimeUnit.SECONDS);//超时时间为当前时间加上10秒钟。
+
      */
 
 
@@ -71,8 +74,20 @@ public class CacheConfig {
      */
     public static String normal () {
         return new CacheControl.Builder()
-                .maxAge(10, TimeUnit.SECONDS)
+                .maxAge(30, TimeUnit.SECONDS)
                 .build().toString();
     }
 
+    /**
+     * 针对近似永久缓存数据，使用如下策略
+     * 接口配置 只使用缓存，加入无缓存 504 拦截器
+     * 为此次任务重新配置cache-control 在首次读取时从网络下载一次
+     * @return
+     */
+    public static String forever () {
+        return new CacheControl.Builder()
+                .maxAge(1, TimeUnit.SECONDS)
+                .maxStale(Integer.MAX_VALUE,TimeUnit.SECONDS)
+                .build().toString();
+    }
 }

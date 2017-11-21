@@ -1,6 +1,6 @@
 package com.tb.rx_retrofit.tools.cache;
 
-import com.tb.rx_retrofit.tools.cache.CacheConfig;
+
 
 /**
  * @描述： -
@@ -14,8 +14,8 @@ public enum CacheModel {
     FORCE_NETWORK(CacheConfig.forceNetWork())
     ,FORCE_CACHE(CacheConfig.forceCache())
     ,FORCE_NETWORK_AND_NOSTRROE(CacheConfig.forceNetWorkAndNoStore())
-    ,NORMAL(CacheConfig.normal());
-
+    ,NORMAL(CacheConfig.normal())
+    ,FOREVER(CacheConfig.forever());
     private String value;
 
     CacheModel(String value){

@@ -8,6 +8,7 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.tb.rx_retrofit.tools.exception.RepeatBuildException;
+import com.tb.rx_retrofit.tools.fuction.CacheForeverInterceptor;
 import com.tb.rx_retrofit.tools.fuction.LogInterceptor;
 import com.tb.rx_retrofit.tools.RxHttpLog;
 
@@ -141,6 +142,7 @@ public class HttpClientFactory {
                         if(autoCache){
                             //添加缓存支持
                             builder.cache(cache);
+                            builder.addInterceptor(new CacheForeverInterceptor());
                         }
 
                         for (Interceptor interceptor : mInterceptors) {
