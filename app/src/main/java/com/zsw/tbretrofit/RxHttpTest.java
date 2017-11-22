@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.tb.rx_retrofit.http_presenter.RxHttpPresenterImpl;
+import com.tb.rx_retrofit.http_presenter.RxHttpApiImpl;
 import com.tb.rx_retrofit.tools.task_management.RxHttpTaskManagement;
 import com.tb.rx_retrofit.http_receiver.HttpCallBack;
 import com.tb.rx_retrofit.http_receiver.HttpUtils;
@@ -62,7 +62,7 @@ public class RxHttpTest extends AppCompatActivity implements View.OnClickListene
 
     private void getGitHubUser (CacheModel cacheModel) {
 
-        new RxHttpPresenterImpl(RxHttpTaskManagement.getINSTANCE())
+        new RxHttpApiImpl(RxHttpTaskManagement.getINSTANCE())
                 .get(GITHUB_RESTFUL, new HttpCallBack<GithubEntity>(RxHttpTest.this) {
                     @Override
                     public void onSuccess (GithubEntity githubEntity) {
@@ -169,7 +169,7 @@ public class RxHttpTest extends AppCompatActivity implements View.OnClickListene
     }
 
     private void getDJData () {
-        new RxHttpPresenterImpl(RxHttpTaskManagement.getINSTANCE())
+        new RxHttpApiImpl(RxHttpTaskManagement.getINSTANCE())
                 .postJson(API.dataUrl, PostDataUtils.getLearnParameter(), new HttpCallBack<Object>(RxHttpTest.this) {
 
                     @Override

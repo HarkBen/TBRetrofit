@@ -43,7 +43,7 @@ public class RetrofitFactory {
 
         /**
          * 如果这里的 RetrofitFactory 需要单独使用，
-         * 不使用{@link RxApiService}的接口定义 这里的baseUrl 则需要规范传入 http://www.xxx.com/
+         * 不使用{@link RetrofitApiService}的接口定义 这里的baseUrl 则需要规范传入 http://www.xxx.com/
          * 否则传入一个假的即可 http://xx.x.com/
          *
          * @return

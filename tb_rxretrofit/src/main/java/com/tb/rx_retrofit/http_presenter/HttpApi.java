@@ -10,13 +10,13 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 /**
- * @描述： -对外接受参数规范定义
+ * @描述： -网络请求通用接口
  * -
  * @作者：zhusw
  * @创建时间：17/11/15 下午3:56
  * @最后更新时间：17/11/15 下午3:56
  */
-public interface HttpPresenterI {
+public interface HttpApi {
 
 
     void get(String url,HttpResponseListener responseListener);

@@ -23,7 +23,7 @@ import rx.Observable;
  * @创建时间：17/11/15 下午3:37
  * @最后更新时间：17/11/15 下午3:37
  */
-public interface RxApiService {
+public interface RetrofitApiService {
 
     /**
      * @RequestMapping（/users/{name}/{id}）

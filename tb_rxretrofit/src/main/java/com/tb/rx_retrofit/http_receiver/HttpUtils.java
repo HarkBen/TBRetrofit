@@ -1,7 +1,7 @@
 package com.tb.rx_retrofit.http_receiver;
 
-import com.tb.rx_retrofit.http_presenter.HttpPresenterI;
-import com.tb.rx_retrofit.http_presenter.RxHttpPresenterImpl;
+import com.tb.rx_retrofit.http_presenter.HttpApi;
+import com.tb.rx_retrofit.http_presenter.RxHttpApiImpl;
 import com.tb.rx_retrofit.tools.task_management.RxHttpTaskManagement;
 
 /**
@@ -12,7 +12,7 @@ import com.tb.rx_retrofit.tools.task_management.RxHttpTaskManagement;
  * @最后更新时间：17/11/21 上午10:31
  */
 public class HttpUtils {
-    public static HttpPresenterI createContact(){
-        return new RxHttpPresenterImpl(RxHttpTaskManagement.getINSTANCE());
+    public static HttpApi createContact(){
+        return new RxHttpApiImpl(RxHttpTaskManagement.getINSTANCE());
     }
 }

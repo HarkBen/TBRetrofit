@@ -3,7 +3,6 @@ package com.tb.rx_retrofit.tools.converter;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonWriter;
-import com.tb.rx_retrofit.http_excuter.RxApiService;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;

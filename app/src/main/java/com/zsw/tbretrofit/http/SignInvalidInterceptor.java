@@ -5,27 +5,20 @@ import android.content.Context;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.gson.Gson;
 import com.tb.rx_retrofit.http_excuter.HttpClientFactory;
-import com.tb.rx_retrofit.http_excuter.RetrofitFactory;
-import com.tb.rx_retrofit.http_excuter.RxApiService;
 import com.tb.rx_retrofit.http_presenter.JsonBody;
 import com.tb.rx_retrofit.tools.RxHttpLog;
 import com.tb.rx_retrofit.tools.cache.CacheModel;
-import com.tb.rx_retrofit.tools.fuction.RetryWhenTimeout;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
 import okhttp3.Cookie;
-import okhttp3.FormBody;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
 
 /**
  * @描述： -

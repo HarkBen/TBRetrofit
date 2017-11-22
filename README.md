@@ -38,6 +38,12 @@
 ```   
 
 
+> Step2. 在你的module的build.gradle文件中增加TBRetrofit依赖。
+
+```gradle
+        dependencies {
+
+
 
 ---
 

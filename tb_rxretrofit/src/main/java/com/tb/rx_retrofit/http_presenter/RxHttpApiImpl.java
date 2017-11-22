@@ -2,7 +2,7 @@ package com.tb.rx_retrofit.http_presenter;
 
 import com.tb.rx_retrofit.tools.fuction.RetryWhenTimeout;
 import com.tb.rx_retrofit.http_excuter.RetrofitFactory;
-import com.tb.rx_retrofit.http_excuter.RxApiService;
+import com.tb.rx_retrofit.http_excuter.RetrofitApiService;
 import com.tb.rx_retrofit.http_receiver.HttpResponseListener;
 import com.tb.rx_retrofit.tools.cache.CacheModel;
 import com.tb.rx_retrofit.tools.task_management.HttpTaskManagement;
@@ -23,19 +23,20 @@ import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 
 /**
- * @描述： -负责选择执行的具体任务及获取任务返回
+ * @描述： -
+ *
  * -
  * @作者：zhusw
  * @创建时间：17/11/15 下午4:21
  * @最后更新时间：17/11/15 下午4:21
  */
-final public class RxHttpPresenterImpl implements HttpPresenterI {
-    private final static String TAG = "RxHttpPresenterImpl";
-    final private RxApiService apiService;
+final public class RxHttpApiImpl implements HttpApi {
+    private final static String TAG = "RxHttpApiImpl";
+    final private RetrofitApiService apiService;
     final private HttpTaskManagement httpTaskManagement;
 
-    public RxHttpPresenterImpl (HttpTaskManagement httpTaskManagement) {
-        apiService = RetrofitFactory.getInstance().createService(RxApiService.class);
+    public RxHttpApiImpl (HttpTaskManagement httpTaskManagement) {
+        apiService = RetrofitFactory.getInstance().createService(RetrofitApiService.class);
         this.httpTaskManagement = httpTaskManagement;
     }
 
