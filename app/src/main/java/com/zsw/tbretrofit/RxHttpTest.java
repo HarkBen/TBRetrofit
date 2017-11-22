@@ -169,7 +169,7 @@ public class RxHttpTest extends AppCompatActivity implements View.OnClickListene
     }
 
     private void getDJData () {
-        new RxHttpApiImpl(RxHttpTaskManagement.getINSTANCE())
+        HttpUtils.getHttpApi()
                 .postJson(API.dataUrl, PostDataUtils.getLearnParameter(), new HttpCallBack<Object>(RxHttpTest.this) {
 
                     @Override

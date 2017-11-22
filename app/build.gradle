@@ -37,5 +37,6 @@ dependencies {
      * ButterKinfe 一键初始化view添加onClick
      */
     compile 'com.jakewharton:butterknife:7.0.1'
-   compile project(':tb_rxretrofit')
+//   compile project(':tb_rxretrofit')
+    compile 'com.github.HarkBen:Tbretrofit:2.0'
 }
