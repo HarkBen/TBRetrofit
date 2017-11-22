@@ -2,6 +2,7 @@
 
 # TBRetrofit 2.0
 #### Tips:2.0版本已完成。完整替换为Rxjava＋retrofit模式。
+[![](https://www.jitpack.io/v/HarkBen/Tbretrofit.svg)](https://www.jitpack.io/#HarkBen/Tbretrofit)
 
 **V 2.0
     1.对外保持 通用API 及回调,get,postJson,formData,files
@@ -33,18 +34,11 @@
 
 ```gradle
         dependencies {
-
-	    }   
+        	        compile 'com.github.HarkBen:Tbretrofit:2.0'
+        	}
 ```   
 
 
-> Step2. 在你的module的build.gradle文件中增加TBRetrofit依赖。
 
-```gradle
-        dependencies {
-
-
-
----
 
 ** 最后附上后台接口示例代码  **：[后台测试接口示例](https://github.com/HarkBen/TBRetrofit/tree/master/server);
