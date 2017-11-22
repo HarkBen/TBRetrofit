@@ -12,7 +12,8 @@ import com.tb.rx_retrofit.tools.task_management.RxHttpTaskManagement;
  * @最后更新时间：17/11/21 上午10:31
  */
 public class HttpUtils {
-    public static HttpApi createContact(){
+    public static HttpApi getHttpApi(){
         return new RxHttpApiImpl(RxHttpTaskManagement.getINSTANCE());
     }
+
 }

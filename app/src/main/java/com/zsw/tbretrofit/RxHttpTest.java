@@ -62,7 +62,7 @@ public class RxHttpTest extends AppCompatActivity implements View.OnClickListene
 
     private void getGitHubUser (CacheModel cacheModel) {
 
-        new RxHttpApiImpl(RxHttpTaskManagement.getINSTANCE())
+        HttpUtils.getHttpApi()
                 .get(GITHUB_RESTFUL, new HttpCallBack<GithubEntity>(RxHttpTest.this) {
                     @Override
                     public void onSuccess (GithubEntity githubEntity) {
@@ -144,7 +144,7 @@ public class RxHttpTest extends AppCompatActivity implements View.OnClickListene
 
 
     private void loginOnDJ () {
-        HttpUtils.createContact()
+        HttpUtils.getHttpApi()
                 .postJson(API.loginUrl, PostDataUtils.getSiginParameter(), new HttpCallBack<SiginResponseBean>(RxHttpTest.this) {
 
 
@@ -183,7 +183,6 @@ public class RxHttpTest extends AppCompatActivity implements View.OnClickListene
                         super.onFinish();
                         printLog("onFinish");
                     }
-
 
 
                     @Override

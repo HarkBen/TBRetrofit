@@ -8,7 +8,7 @@ package com.zsw.tbretrofit.http;
  * @最后更新时间：17/11/21 下午2:36
  */
 public class API {
-    private static final String DJ_IP = "http://180.166.66.226:43230/baoshi";
+    private static final String DJ_IP = "http://xxx.xx:8080/xx";
     public static final String loginUrl = DJ_IP + "/mobilelogin";
     public static final String dataUrl = DJ_IP+"/materials/queryMaterials";
 }
