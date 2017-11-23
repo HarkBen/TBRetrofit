@@ -13,12 +13,14 @@
   * 6.集中处理所望网络异常 并分类下发
 
 
+### 框架图
+
+![](picture/tbretrofitV2.0.png)
 
 
 
-
-  
-## Gradle
+## 集成
+#### Gradle
 > Step1. 在你的**根build.gradle**文件中增加JitPack仓库依赖。
 
 ```gradle
@@ -38,7 +40,7 @@
         	}
 ```   
 
-## 权限
+## 必要权限
 ```html
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
@@ -67,10 +69,10 @@ OkHttpClient client = new HttpClientFactory.Builder()
 ## API 调用
 ```java
  HttpUtils.getHttpApi().get(url,listener);
-HttpUtils.getHttpApi().postJson(url,jsonEntity,listener);
+ HttpUtils.getHttpApi().postJson(url,jsonEntity,listener);
 ```
 
 
 
 
- **没有专门为2.0版本写server，用的实际项目测试。这里是一个Spring boot 为框架，下载即用。**：[后台测试接口示例](https://github.com/HarkBen/TBRetrofit/tree/master/server);
+ **没有专门为2.0版本写server，用的实际项目测试。这里是一个Spring boot 微框架，下载即用。**：[后台测试接口示例](https://github.com/HarkBen/TBRetrofit/tree/master/server);

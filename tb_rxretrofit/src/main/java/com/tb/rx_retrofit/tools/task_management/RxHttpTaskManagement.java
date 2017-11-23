@@ -41,8 +41,10 @@ public class RxHttpTaskManagement implements HttpTaskManagement<Object> {
 
     @Override
     public void addSubscription (Object tag, Subscription subscription) {
-        tasks.put(tag, subscription);
-        RxHttpLog.printI("RxHttpTaskmanagement","记录新订阅 key:"+tag.hashCode());
+        if(null != tag && !tasks.containsKey(tag)){
+            tasks.put(tag, subscription);
+            RxHttpLog.printI("RxHttpTaskmanagement","记录新订阅 key:"+tag.hashCode());
+        }
     }
 
 
@@ -80,6 +82,8 @@ public class RxHttpTaskManagement implements HttpTaskManagement<Object> {
     /**
      * 抛弃之前已添加的所有任务接收者,但不负责回收
      * －潜意识里觉得需要这么一个方法～～～
+     * 因为tasks 引用发生在多个线程 所以不可以 置空
+     * 仅可使用clear 来释放所有保存的对象
      */
     @Override
     public void abandonAll () {
