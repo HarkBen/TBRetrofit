@@ -94,9 +94,9 @@ public class SignInvalidInterceptor implements Interceptor {
         } catch (IOException e) {
             RxHttpLog.printI(TAG," 请求登陆失败");
             siginSuccess = false;
-        }finally {
-            return siginSuccess;
         }
+            return siginSuccess;
+
 
     }
 

@@ -27,7 +27,7 @@ public class RxHttpTaskManagement implements HttpTaskManagement<Object> {
         tasks = new HashMap<>();
     }
 
-    public static HttpTaskManagement getINSTANCE () {
+    public static HttpTaskManagement<Object> getINSTANCE () {
         if (null == INSTANCE) {
             synchronized (RxHttpTaskManagement.class) {
                 if (null == INSTANCE) {

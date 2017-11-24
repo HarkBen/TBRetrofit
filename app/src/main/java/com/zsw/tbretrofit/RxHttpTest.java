@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.tb.rx_retrofit.http_presenter.RxHttpApiImpl;
 import com.tb.rx_retrofit.tools.task_management.RxHttpTaskManagement;
 import com.tb.rx_retrofit.http_receiver.HttpCallBack;
 import com.tb.rx_retrofit.http_receiver.HttpUtils;
@@ -60,7 +59,7 @@ public class RxHttpTest extends AppCompatActivity implements View.OnClickListene
 
     }
 
-    private void getGitHubUser (CacheModel cacheModel) {
+    private void getGitHubUser (final CacheModel cacheModel) {
 
         HttpUtils.getHttpApi()
                 .get(GITHUB_RESTFUL, new HttpCallBack<GithubEntity>(RxHttpTest.this) {
