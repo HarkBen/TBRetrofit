@@ -19,7 +19,7 @@
 
 
 
-## 集成
+## 集成 （由于jitpack 还未支持 build tools 3.0.1 所以还无法使用线上集成）
 #### Gradle
 > Step1. 在你的**根build.gradle**文件中增加JitPack仓库依赖。
 
@@ -36,7 +36,7 @@
 
 ```gradle
         dependencies {
-        	        compile 'com.github.HarkBen:Tbretrofit:2.0'
+        	        compile '－－'
         	}
 ```   
 
