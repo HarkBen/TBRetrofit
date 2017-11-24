@@ -1,5 +1,7 @@
 package com.tb.rx_retrofit.tools.converter;
 
+import com.tb.rx_retrofit.tools.RxHttpLog;
+
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
@@ -15,10 +17,8 @@ import retrofit2.Converter;
 public class StringResponseBodyConverter implements Converter<ResponseBody, String> {
     @Override
     public String convert (ResponseBody value) throws IOException {
-
-        if (null == value || value.contentLength() < 1) {
-            return "";
-        }
+        //这里不用拦截 contentLength ＝＝－1？： 源码中转string 示已经判断了
+        RxHttpLog.printI("StringResponseBodyConverter","ResponseBody:"+value.contentLength());
         try {
             return value.string();
         } finally {

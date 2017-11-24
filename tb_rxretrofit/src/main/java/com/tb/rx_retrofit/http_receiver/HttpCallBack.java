@@ -76,6 +76,9 @@ public abstract class  HttpCallBack<T> implements HttpResponseListener{
             case 200:
                 formatData(response);
                 break;
+            case 304:
+                formatData(response);
+                break;
             case 404:
             case 400:
             case 405:
