@@ -1,10 +1,10 @@
 ![pppm.jpg](picture/pppm.png)
 
-# TBRetrofit 2.0
-#### Tips:2.0版本已完成。完整替换为Rxjava＋retrofit模式。
+# TBRetrofit 2.2
+#### Tips:2.2版本已完成。完整替换为Rxjava＋retrofit模式。
 [![](https://www.jitpack.io/v/HarkBen/TBRetrofit.svg)](https://www.jitpack.io/#HarkBen/TBRetrofit)
 
-#### V 2.0
+#### V 2.2
   * 1.对外保持 通用API 及回调,get,postJson,formData,files
   * 2.缓存插拔式使用－支持永久缓存 并自动初始化首次数据
   * 3.cookie session token 过期自动刷新策略
