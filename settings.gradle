@@ -1,1 +1,1 @@
-include ':app', ':tb_rxretrofit'
+include ':tb_rxretrofit','app'

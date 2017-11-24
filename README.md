@@ -2,7 +2,7 @@
 
 # TBRetrofit 2.0
 #### Tips:2.0版本已完成。完整替换为Rxjava＋retrofit模式。
-[![](https://www.jitpack.io/v/HarkBen/Tbretrofit.svg)](https://www.jitpack.io/#HarkBen/Tbretrofit)
+[![](https://www.jitpack.io/v/HarkBen/TBRetrofit.svg)](https://www.jitpack.io/#HarkBen/TBRetrofit)
 
 #### V 2.0
   * 1.对外保持 通用API 及回调,get,postJson,formData,files
