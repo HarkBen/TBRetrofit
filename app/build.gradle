@@ -34,12 +34,9 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:23.3.0'
     testCompile 'junit:junit:4.12'
-    compile project(':tb_rxretrofit')
-    /**
-     * ButterKinfe 一键初始化view添加onClick
-     */
+//    compile project(':tb_rxretrofit')
+    compile 'com.github.HarkBen:TBRetrofit:2.2'
     compile 'com.jakewharton:butterknife:7.0.1'
-    //    //V3.0 导入注解框架
     //    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }
 
