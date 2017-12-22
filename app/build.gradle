@@ -21,10 +21,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+   
 }
 
 dependencies {
@@ -36,7 +33,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 //    compile project(':tb_rxretrofit')
     compile 'com.github.HarkBen:TBRetrofit:2.2'
-    compile 'com.jakewharton:butterknife:7.0.1'
-    //    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }
 
