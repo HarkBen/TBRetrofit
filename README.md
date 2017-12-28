@@ -19,7 +19,7 @@
 
 
 
-## 集成 （gradle 版本不要高于3.3，否则无法引用。比如最新AS 3.0要求的4.1）
+## 集成 （jitpack还未更新最新的gradle 所以 gradle 版本不要高于3.3，否则无法引用。比如最新AS 3.0要求的4.1）
 #### Gradle
 > Step1. 在你的**根build.gradle**文件中增加JitPack仓库依赖。
 
