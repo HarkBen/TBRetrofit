@@ -10,9 +10,6 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        jackOptions {
-            enabled true
-        }
 
     }
     buildTypes {
@@ -31,8 +28,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:23.3.0'
     testCompile 'junit:junit:4.12'
-//    compile project(':tb_rxretrofit')
-    compile 'com.github.HarkBen:TBRetrofit:2.2'
+    compile project(':tb_rxretrofit')
+//    compile 'com.github.HarkBen:TBRetrofit:2.2'
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }
