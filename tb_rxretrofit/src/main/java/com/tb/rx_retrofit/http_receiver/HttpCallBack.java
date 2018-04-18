@@ -87,16 +87,6 @@ public abstract class  HttpCallBack<T> implements HttpResponseListener{
                 onFailure(HttpCode.CODE_REQUEST_ERROR, "网络请求错误："+response.code());
                 break;
         }
-
-
-
-
-
-
-
-
-
-
     }
 
     @Override
