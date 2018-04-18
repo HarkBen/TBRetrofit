@@ -36,7 +36,7 @@
 
 ```gradle
         dependencies {
-        	        compile 'compile 'com.github.HarkBen:TBRetrofit:2.2'
+        	        compile 'com.github.HarkBen:TBRetrofit:2.2'
         	}
 ```   
 
@@ -75,3 +75,19 @@ OkHttpClient client = new HttpClientFactory.Builder()
  **没有专门为2.0版本写server，用的实际项目测试。这里是一个Spring boot 微框架，下载即用。**：[后台测试接口示例](https://github.com/HarkBen/TBRetrofit/tree/master/server);
 抱歉我还有个问题，我想知道，jitpack引用对于gradle版本有要求吗，兼容性或者支持
 
+
+### LICENSES
+
+   Copyright {2017} {HarkBen}
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
